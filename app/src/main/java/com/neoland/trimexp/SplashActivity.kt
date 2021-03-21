@@ -35,8 +35,8 @@ class SplashActivity: AppCompatActivity() {
    private fun tiempoCarga(){
 
        lifecycleScope.launch {
-           delay(5000)
-           val intent = Intent(this@SplashActivity, MainActivity::class.java)
+           delay(2000)
+           val intent = Intent(this@SplashActivity, LoginActivity::class.java)
            startActivity(intent)
            finish()
        }
