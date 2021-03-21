@@ -1,24 +1,29 @@
-package com.neoland.trimexp
+package com.neoland.trimexp.home
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.neoland.trimexp.databinding.ActivityLoginBinding
-import com.neoland.trimexp.databinding.ActivitySplashBinding
 
-class LoginActivity: AppCompatActivity() {
+class HomeActivity: AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
-    private lateinit var model: LoginActivityViewModel
+    private lateinit var model: HomeActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        model = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
+        model = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
 
         binding.imageViewLogAct.setImageResource(model.getLoginActivityImage())
+
+        binding.imageViewIconMenu.setOnClickListener {
+            binding.drawerLayout.openDrawer(Gravity.LEFT)
+        }
+
 
 
     }

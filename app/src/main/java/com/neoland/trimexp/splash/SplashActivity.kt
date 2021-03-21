@@ -1,4 +1,4 @@
-package com.neoland.trimexp
+package com.neoland.trimexp.splash
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.neoland.trimexp.databinding.ActivitySplashBinding
+import com.neoland.trimexp.home.HomeActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -36,7 +37,7 @@ class SplashActivity: AppCompatActivity() {
 
        lifecycleScope.launch {
            delay(2000)
-           val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+           val intent = Intent(this@SplashActivity, HomeActivity::class.java)
            startActivity(intent)
            finish()
        }

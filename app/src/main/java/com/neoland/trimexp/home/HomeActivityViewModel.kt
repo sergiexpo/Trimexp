@@ -1,9 +1,10 @@
-package com.neoland.trimexp
+package com.neoland.trimexp.home
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.neoland.trimexp.R
 
-class LoginActivityViewModel (application: Application) : AndroidViewModel(application)  {
+class HomeActivityViewModel (application: Application) : AndroidViewModel(application)  {
 
 
     fun getLoginActivityImage(): Int {
