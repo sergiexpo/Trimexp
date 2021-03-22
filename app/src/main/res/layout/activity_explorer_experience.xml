@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout_top"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/blue_1"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView_iconBack"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/abc_vector_test"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:text="AQUÍ VA UNA SEARCH BAR"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_weight="2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_kindExperience"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/orange_1"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:text="Be the Guest"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:text="Be the host"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_weight="2"/>
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView_menuExperiencesList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_kindExperience"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_explorer_experiences"/>
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout_experiences"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/bottomNavigationView_menuExperiencesList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
