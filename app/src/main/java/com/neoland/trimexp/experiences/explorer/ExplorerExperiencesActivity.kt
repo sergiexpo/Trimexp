@@ -1,15 +1,21 @@
 package com.neoland.trimexp.experiences.explorer
 
+import android.app.Dialog
 import android.os.Bundle
+import android.view.Window
+import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.neoland.trimexp.R
 import com.neoland.trimexp.databinding.ActivityExplorerExperienceBinding
+import kotlinx.coroutines.delay
 
 
 class ExplorerExperiencesActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityExplorerExperienceBinding
+    private var fragment = ExplorerExperiencesFragment()
+
 
     companion object {
         const val TAG1 = "Photo"
@@ -32,15 +38,17 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         binding = ActivityExplorerExperienceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        changeFragment(fragment)
 
         binding.bottomNavigationViewMenuExperiencesList.setOnNavigationItemSelectedListener{ itemSelected ->
             when (itemSelected.itemId){
 
                 R.id.option_sort-> {
-                    changeFragment(ExplorerExperiencesFragment())
+                  //fragment.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_ASCENDING)
+                    showDialog("aa")
                 }
                 R.id.option_filter -> {
-                    changeFragment(ExplorerExperiencesFragment())
+                    fragment.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_DESCENDING)
                 }
                 R.id.option_map -> {
 
@@ -60,5 +68,29 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
+
+
+
+    private fun showDialog(title: String) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.options_menu_sort)
+      //  val body = dialog.findViewById(R.id.body) as TextView
+      //  body.text = title
+        val sortButtonAscName = dialog.findViewById(R.id.option_sort_AscendingName) as RadioButton
+        val sortButtonDescName = dialog.findViewById(R.id.option_sort_DescendingName) as RadioButton
+
+        sortButtonAscName.setOnClickListener {
+            dialog.dismiss()
+            fragment.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_ASCENDING)
+        }
+        sortButtonDescName.setOnClickListener {
+            dialog.dismiss()
+            fragment.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_DESCENDING)
+        }
+        dialog.show()
+    }
+
 
 }

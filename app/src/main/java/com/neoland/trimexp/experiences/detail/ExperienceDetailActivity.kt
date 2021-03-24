@@ -10,6 +10,7 @@ import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Comp
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG12
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG2
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG3
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG4
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG6
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG9
 
@@ -26,6 +27,7 @@ class ExperienceDetailActivity: AppCompatActivity() {
         binding.imageViewMainPhoto.setImageResource(intent.getIntExtra(TAG1, 0))
         binding.textViewTitleDetailExp.text = intent.getStringExtra(TAG2)
         binding.textViewDescriptionDetailExp.text = intent.getStringExtra(TAG3)
+        binding.textViewDateDetailExp.text = intent.getStringExtra(TAG4)
         binding.textViewDurationDetailExp.text = intent.getStringExtra(TAG6)
         binding.textViewPriceDetailExp .text = intent.getStringExtra(TAG9) + " " + intent.getStringExtra(TAG10)
         binding.textViewAdressDetailExp .text = intent.getStringExtra(TAG11)

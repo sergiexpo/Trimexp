@@ -18,6 +18,7 @@ import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Comp
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG12
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG2
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG3
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG4
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG6
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG7
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG8
@@ -30,6 +31,13 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
     private lateinit var binding: FragmentExperienceslistBinding
     private lateinit var model : ExplorerExperiencesFragmentViewModel
     private var adapter = ExplorerExperiencesAdapter(this)
+
+    enum class SortTypes {
+        BY_NAME_ASCENDING,
+        BY_NAME_DESCENDING,
+        BY_DISTANCE,
+        BY_DATES
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,13 +56,36 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
 
         createRecyclerView()
 
+        observeModelExperiences()
+
     }
 
+    override fun onResume() {
+        super.onResume()
+        model.getAllExperiences()
+    }
 
 
     private fun createRecyclerView() {
         binding.recyclerViewExperiences.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewExperiences.adapter = adapter
+    }
+
+    private fun observeModelExperiences(){
+        lifecycleScope.launch {
+            model.experiences.observe(viewLifecycleOwner) {
+                adapter.updateExperiences(it)
+            }
+        }
+    }
+
+    fun sortExperiences(sortType : SortTypes){
+        when (sortType){
+
+            SortTypes.BY_NAME_ASCENDING -> model.sortExperiencesByAscendingName()
+            SortTypes.BY_NAME_DESCENDING -> model.sortExperiencesByDescendingName()
+
+        }
     }
 
 
@@ -65,6 +96,7 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
             intent.putExtra(TAG1, experience.mainPhoto)
             intent.putExtra(TAG2, experience.title)
             intent.putExtra(TAG3, experience.description)
+            intent.putExtra(TAG4, experience.dateUnique)
             intent.putExtra(TAG6, experience.duration)
             intent.putExtra(TAG9, experience.price)
             intent.putExtra(TAG10, experience.divisa)

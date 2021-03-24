@@ -1,19 +1,33 @@
 package com.neoland.trimexp.entities
 
-class Experience (var title: String,
-                  var mainPhoto: Int,
-                  var description: String,
-                  var location: String,
-                  var adress: String = " ",
-                  var duration: String,
-                  var opinions: MutableList<String> = mutableListOf<String>(),
-                  var isNovelty: Boolean,
-                  var typeExperience: String, // Host o Guest
-                  var languages: MutableList<String> = mutableListOf<String>(),
-                  var price: String,
-                  var paymentMethods: MutableList<String> = mutableListOf<String>(),
-                  var divisa: String = " ",
-                  var owner: String,            // Aqui habrá que poner que sea de la clase USER
-                  var requester: String?      // Aqui habrá que poner que sea de la clase USER
-                  ) {
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.util.*
+
+@Entity
+data class Experience (var title: String,
+                       var mainPhoto: Int,
+                       var description: String,
+                       var location: String,
+                       var adress: String = " ",
+                       var duration: String,
+                       var isNovelty: Boolean,
+                       var typeExperience: String, // Host o Guest
+                       var price: String,
+                       var divisa: String = " ",
+                       var owner: String,            // Aqui habrá que poner que sea de la clase USER
+                       var requester: String?,      // Aqui habrá que poner que sea de la clase USER
+                       var dateFrom: String?,
+                       var dateTo : String?,
+                       var dateUnique: String?
+) {
+
+  //  var isOpenDate  //Crear variable computada, que se informe con true si hay rango de fechas o false si la fecha es unica
+
+ /*   var opinions: List<String> = listOf()
+    var languages: MutableList<String> = mutableListOf()
+    var paymentMethods: MutableList<String> = mutableListOf() */
+
+    @PrimaryKey(autoGenerate = true)
+    var id : Int = 0
 }

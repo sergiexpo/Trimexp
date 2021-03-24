@@ -106,6 +106,7 @@ tools:openDrawer="start" >
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="Where? (Near to me)"
+                android:textColorHint="#FFFFFF"
                 android:textColor="#FFFFFF"
                 android:layout_marginStart="4dp"/>
         </LinearLayout>
@@ -135,6 +136,7 @@ tools:openDrawer="start" >
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="When? (Today)"
+                android:textColorHint="#FFFFFF"
                 android:textColor="#FFFFFF"
                 android:layout_marginStart="4dp"/>
         </LinearLayout>
