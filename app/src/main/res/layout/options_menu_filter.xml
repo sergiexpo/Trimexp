@@ -10,6 +10,14 @@
     android:padding="16dp">
 
 
+    <RadioButton
+        android:id="@+id/option_filter_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:text="All Experiences"/>
+
+
 <RadioButton
     android:id="@+id/option_filter_free"
     android:layout_width="match_parent"

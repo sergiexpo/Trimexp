@@ -43,6 +43,7 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
         FROM_DATE,
         TO_DATE,
         FREE,
+        ALL,
     }
 
 
@@ -98,8 +99,8 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
         when (filterType){
 
             FilterTypes.FROM_DATE -> model.filterExperiencesFromDate(date)
-            FilterTypes.TO_DATE -> model.filterExperiencesToDate(date)
             FilterTypes.FREE -> model.filterExperiencesFree()
+            FilterTypes.ALL -> model.filterExperiencesAll(date)
 
 
         }

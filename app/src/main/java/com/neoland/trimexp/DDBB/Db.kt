@@ -7,16 +7,18 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.neoland.trimexp.R
 import com.neoland.trimexp.entities.Experience
+import com.neoland.trimexp.entities.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-@Database(entities = [Experience::class, DbStatus::class], version = 1)
+@Database(entities = [Experience::class, DbStatus::class, User::class], version = 1)
 abstract class Db : RoomDatabase() {
 
     abstract fun experienceDao(): ExperienceDAO
     abstract fun dbStatusDao(): DbStatusDao
+    abstract fun userDAO(): UserDAO
 
     companion object {
 
@@ -61,7 +63,7 @@ abstract class Db : RoomDatabase() {
                             Experience( "Passeig per les rambles", R.mipmap.sample_ramblas,
                                 "Las Ramblas siempre están animadas, repletas de turistas y artistas callejeros que actúan como estatuas humanas. El paseo cuenta con numerosas terrazas y resulta agradable sentarse para contemplar el ir y venir de los transeúntes a pesar de que los precios se ven incrementados por tratarse de una zona tan turística.",
                                 "Barcelona", "Plaça Catalunya", "2 horas", true,  "Host", "Free",
-                                 "", "Ronnie", null,1623578400000, null),
+                                 "", "Gokue", null,1623578400000, null),
                             Experience( "Visita Museo de Cera", R.mipmap.sample_museucera,
                                 "El Nuevo Museo de Cera de Barcelona abre sus puertas convertido en un museo del siglo XXI pero sin perder su impresionante arquitectura e historia. Utilizando nuevas tecnologías, figuras y escenografías distribuidas en 28 zonas, los visitantes disfrutarán de un recorrido por una parte de nuestra historia y de nuestro presente.",
                                 "Barcelona", "Ramba Catalunya", "3 horas", false,  "Host", "Free",
@@ -69,7 +71,7 @@ abstract class Db : RoomDatabase() {
                             Experience( "Escape room Catacumbas", R.mipmap.sample_escaperoom,
                                 "Elige película y toma asiento. En cualquier momento sentirás que la ficción se ha transformado en realidad y ahora eres tú el protagonista de la aventura. Llegados a este punto, ya solo te queda por saber que Golden Pop está formado por un equipo de empresas con amplia experiencia en el mundo Room Escape, nuestros juegos están reconocidos dentro del ámbito nacional e incluso contamos con varios premios de prestigio dentro del sector.",
                                 "Barcelona", "Carrer girona 23", "1,5 horas", false,  "Guest", "15",
-                                "€", "Ronnie", null,1617271200000, null)
+                                "€", "Goku", null,1617271200000, null)
                             ,
                             Experience( "Tour guiado por Gracia", R.mipmap.sample_gracia,
                                 "El distrito de Gracia (en catalán, Districte de Gràcia) es uno de los diez distritos en que se divide administrativamente la ciudad de Barcelona. Es el distrito sexto de la ciudad y comprende el territorio de la antigua Villa de Gracia, aglutinada a partir de la parroquia en 1628 y población independiente de Barcelona entre 1821 y 1823 y desde 1850 hasta que fue agregada de nuevo a Barcelona en 1897. Es el distrito más pequeño de Barcelona, con una extensión de 4,19 km², pero es el segundo con mayor densidad demográfica (28 660 habitantes por kilómetro cuadrado), al contar con una población de 120 087 habitantes según los datos del Instituto Nacional de Estadística de España del 1 de enero de 2005.",
@@ -78,14 +80,22 @@ abstract class Db : RoomDatabase() {
                                 Experience( "Visita Kaburi", R.mipmap.sample_kaburi,
                                         "¿Juegas a rol? Ella habla tu idioma a la perfección y seguro que sabe encontrar aquella novedad o título que buscas. Ademá puede asesorarte sobre juegos de mesa, manga y anime.",
                                         "Barcelona", "Plasseig St Joan", "4 horas", true,  "Guest", "Free",
-                                        "", "Colometa", null,1617184800000, null),
+                                        "", "Luffy", null,1617184800000, null),
                                 Experience( "Espectaculo Magia", R.mipmap.sample_magia,
                                         "Miguel Ángel Alarcón Moreno, que es así como se llama este joven mago, nació el 24 de abril de 1988 en la ciudad de Mollet del Vallès. A diferencia de muchos niños, él nunca tuvo el clásico juego de Magia Borrás, pero el interés y curiosidad por este noble arte siempre estuvo presente dentro de su cabeza. 2028 Pasa años de adolescencia entreteniendo a sus amigos y familiares con los típicos juegos de cartas que todo el mundo hemos hecho alguna vez.",
                                         "Barcelona", "Teatre apolo", "2 horas", true,  "Guest", "10",
                                         "€", "Miguel_Developer", null,1632477600000, null)
                             )
+
+
+
+                        val users: List<User> = listOf(User("Laia", R.mipmap.user_sample_1, "Viajera callejera", "laia@gmail.com", "patata123" ),
+                                User("Goku", R.mipmap.user_sample2, "Time traveller", "ron@gmail.com", "pikachu123" ),
+                                User("Luffy", R.mipmap.user_sample3, "Descubrir nuevos lugares", "colometa@gmail.com", "pomelo123" ))
+
                         INSTANCE?.experienceDao()?.insertAll(experiences)
 
+                        INSTANCE?.userDAO()?.insertAll(users)
 
                         INSTANCE?.dbStatusDao()?.insert(DbStatus(1, true))
 

@@ -39,6 +39,8 @@ class ExplorerExperiencesFragmentViewModel (application: Application) : AndroidV
 
     }
 
+
+
     //////// SORT FUNCTIONS ////////
 
 
@@ -56,10 +58,12 @@ class ExplorerExperiencesFragmentViewModel (application: Application) : AndroidV
 
     fun sortExperiencesByDescendingName() {
 
-        manage { unSortedList ->
+    /*    manage { unSortedList ->
             unSortedList.sortedBy { experience ->
                 experience.title }.reversed()
-        }
+        } */
+        experiences.value = experiences.value?.sortedBy { experience ->
+            experience.title }?.reversed()
     }
 
 
@@ -81,25 +85,32 @@ class ExplorerExperiencesFragmentViewModel (application: Application) : AndroidV
         }
     }
 
-    fun filterExperiencesToDate(date: Long) {
-        manage { unFilteredList ->
-            unFilteredList.filter { experience ->
-                val dateUnique = experience.dateFrom
-                if (dateUnique != null) {
-                    dateUnique < date
-                } else {
-                    false
-                }
-            }
-        }
+
+    fun filterExperiencesAll(date: Long){
+        filterExperiencesFromDate(date)
     }
 
     fun filterExperiencesFree() {
-        manage { unFilteredList ->
+      /*  manage { unFilteredList ->
             unFilteredList.filter { experience ->
                 experience.price == "Free"
             }
-        }
+        }*/
+        experiences.value = experiences.value?.filter { experience ->
+            experience.price == "Free"}
+    }
+
+
+    fun filterExperiencesHost() {
+
+        experiences.value = experiences.value?.filter { experience ->
+            experience.typeExperience == "Host"}
+    }
+
+    fun filterExperiencesGuest() {
+
+        experiences.value = experiences.value?.filter { experience ->
+            experience.typeExperience == "Guest"}
     }
 
 

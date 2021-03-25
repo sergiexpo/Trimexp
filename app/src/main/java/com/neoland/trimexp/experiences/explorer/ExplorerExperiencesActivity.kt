@@ -1,6 +1,7 @@
 package com.neoland.trimexp.experiences.explorer
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.Window
 import android.widget.RadioButton
@@ -9,10 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.neoland.trimexp.R
 import com.neoland.trimexp.databinding.ActivityExplorerExperienceBinding
+import com.neoland.trimexp.home.HomeActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ExplorerExperiencesActivity: AppCompatActivity() {
@@ -47,11 +51,18 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
 
         date = intent.getLongExtra(TAG20, 0L)
 
+        binding.textViewSearch.text = convertLongToFormattedDate(date)
+
         lifecycleScope.launch {
             lifecycleScope.async(Dispatchers.IO)  {
                 changeFragment(fragment)
             } .await()
             fragment.filterExperiences(ExplorerExperiencesFragment.FilterTypes.FROM_DATE, date )
+        }
+
+
+        binding.imageViewIconBack.setOnClickListener {
+            goBackHomeActivity()
         }
 
 
@@ -111,14 +122,36 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         dialog.setCancelable(true)
         dialog.setContentView(R.layout.options_menu_filter)
 
-        val sortButtonAscName = dialog.findViewById(R.id.option_filter_free) as RadioButton
+        val filterButtonAll = dialog.findViewById(R.id.option_filter_all) as RadioButton
+        val filterButtonFree = dialog.findViewById(R.id.option_filter_free) as RadioButton
 
-        sortButtonAscName.setOnClickListener {
+        filterButtonAll.setOnClickListener {
+            dialog.dismiss()
+            fragment.filterExperiences(ExplorerExperiencesFragment.FilterTypes.ALL, date)
+        }
+
+        filterButtonFree.setOnClickListener {
             dialog.dismiss()
             fragment.filterExperiences(ExplorerExperiencesFragment.FilterTypes.FREE)
         }
 
         dialog.show()
+    }
+
+
+
+    private fun goBackHomeActivity(){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+
+
+    private fun convertLongToFormattedDate(time: Long): String {
+        val date = Date(time)
+        val simpleDateFormat = SimpleDateFormat("EEE., dd MMM. yyyy")
+        return simpleDateFormat.format(date.time)
     }
 
 }
