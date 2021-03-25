@@ -6,22 +6,28 @@ import android.view.Window
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.neoland.trimexp.R
 import com.neoland.trimexp.databinding.ActivityExplorerExperienceBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class ExplorerExperiencesActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityExplorerExperienceBinding
     private var fragment = ExplorerExperiencesFragment()
-
+    private var date : Long = 0
 
     companion object {
         const val TAG1 = "Photo"
         const val TAG2 = "Title"
         const val TAG3 = "Description"
         const val TAG4 = "Date"
+        const val TAG45 = "Date_From"
+        const val TAG46 = "Date_To"
         const val TAG5 = "Time"
         const val TAG6 = "Duration"
         const val TAG7 = "Language"
@@ -30,6 +36,7 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         const val TAG10 = "Divisa"
         const val TAG11 = "Adress"
         const val TAG12 = "Owner"
+        const val TAG20 = "UniqueDateFromHomeScreen"
 
     }
 
@@ -38,17 +45,24 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         binding = ActivityExplorerExperienceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        changeFragment(fragment)
+        date = intent.getLongExtra(TAG20, 0L)
+
+        lifecycleScope.launch {
+            lifecycleScope.async(Dispatchers.IO)  {
+                changeFragment(fragment)
+            } .await()
+            fragment.filterExperiences(ExplorerExperiencesFragment.FilterTypes.FROM_DATE, date )
+        }
+
 
         binding.bottomNavigationViewMenuExperiencesList.setOnNavigationItemSelectedListener{ itemSelected ->
             when (itemSelected.itemId){
 
                 R.id.option_sort-> {
-                  //fragment.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_ASCENDING)
-                    showDialog("aa")
+                    showDialogSort()
                 }
                 R.id.option_filter -> {
-                    fragment.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_DESCENDING)
+                    showDialogFilter()
                 }
                 R.id.option_map -> {
 
@@ -61,7 +75,6 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         }
 
 
-
     private fun changeFragment(fragment : Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.frameLayoutExperiences.id, fragment)
@@ -70,8 +83,7 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
     }
 
 
-
-    private fun showDialog(title: String) {
+    private fun showDialogSort() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
@@ -92,5 +104,21 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         dialog.show()
     }
 
+
+    private fun showDialogFilter() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.options_menu_filter)
+
+        val sortButtonAscName = dialog.findViewById(R.id.option_filter_free) as RadioButton
+
+        sortButtonAscName.setOnClickListener {
+            dialog.dismiss()
+            fragment.filterExperiences(ExplorerExperiencesFragment.FilterTypes.FREE)
+        }
+
+        dialog.show()
+    }
 
 }

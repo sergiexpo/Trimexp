@@ -17,10 +17,11 @@ data class Experience (var title: String,
                        var divisa: String = " ",
                        var owner: String,            // Aqui habrá que poner que sea de la clase USER
                        var requester: String?,      // Aqui habrá que poner que sea de la clase USER
-                       var dateFrom: String?,
-                       var dateTo : String?,
-                       var dateUnique: String?
+                       var dateFrom: Long, //Fecha única
+                       var dateTo : Long?
+
 ) {
+
 
   //  var isOpenDate  //Crear variable computada, que se informe con true si hay rango de fechas o false si la fecha es unica
 

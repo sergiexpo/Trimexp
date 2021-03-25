@@ -1,6 +1,7 @@
 package com.neoland.trimexp.experiences.explorer
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -27,35 +28,79 @@ class ExplorerExperiencesFragmentViewModel (application: Application) : AndroidV
 
     }
 
+    fun manage(managedFunction: (experiences : List<Experience>) -> List<Experience>){
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val list = Db.getDatabase(getApplication()).experienceDao().getAll()
+            withContext(Dispatchers.Main){
+                experiences.value = managedFunction(list)
+            }
+        }
+
+    }
+
+    //////// SORT FUNCTIONS ////////
+
+
     fun sortExperiencesByAscendingName() {
 
-        sort { unSortedList ->
+      /*  manage { unSortedList ->
             unSortedList.sortedBy { experience ->
                 experience.title }
-        }
+        } */
+
+       experiences.value = experiences.value?.sortedBy { experience ->
+            experience.title }
     }
 
 
     fun sortExperiencesByDescendingName() {
 
-        sort { unSortedList ->
+        manage { unSortedList ->
             unSortedList.sortedBy { experience ->
                 experience.title }.reversed()
         }
     }
 
 
-    fun sort(sortedFunction: (experiences : List<Experience>) -> List<Experience>){
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val list = Db.getDatabase(getApplication()).experienceDao().getAll()
-            withContext(Dispatchers.Main){
-                experiences.value = sortedFunction(list)
+
+    //////// Filter FUNCTIONS ////////
+
+    fun filterExperiencesFromDate(date: Long) {
+        manage { unFilteredList ->
+            unFilteredList.filter { experience ->
+             /*   val dateUnique = experience.dateFrom
+                if (dateUnique != null) {
+                    dateUnique > date
+                } else {
+                    false
+                } */
+                experience.dateFrom > date
             }
         }
-
     }
 
+    fun filterExperiencesToDate(date: Long) {
+        manage { unFilteredList ->
+            unFilteredList.filter { experience ->
+                val dateUnique = experience.dateFrom
+                if (dateUnique != null) {
+                    dateUnique < date
+                } else {
+                    false
+                }
+            }
+        }
+    }
+
+    fun filterExperiencesFree() {
+        manage { unFilteredList ->
+            unFilteredList.filter { experience ->
+                experience.price == "Free"
+            }
+        }
+    }
 
 
 }

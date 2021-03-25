@@ -39,6 +39,12 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
         BY_DATES
     }
 
+    enum class FilterTypes {
+        FROM_DATE,
+        TO_DATE,
+        FREE,
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +94,17 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
         }
     }
 
+    fun filterExperiences(filterType : FilterTypes, date: Long = 0){
+        when (filterType){
+
+            FilterTypes.FROM_DATE -> model.filterExperiencesFromDate(date)
+            FilterTypes.TO_DATE -> model.filterExperiencesToDate(date)
+            FilterTypes.FREE -> model.filterExperiencesFree()
+
+
+        }
+    }
+
 
     private fun startExperienceDetailActivity(experience: Experience){
 
@@ -96,7 +113,7 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
             intent.putExtra(TAG1, experience.mainPhoto)
             intent.putExtra(TAG2, experience.title)
             intent.putExtra(TAG3, experience.description)
-            intent.putExtra(TAG4, experience.dateUnique)
+            intent.putExtra(TAG4, experience.dateFrom)
             intent.putExtra(TAG6, experience.duration)
             intent.putExtra(TAG9, experience.price)
             intent.putExtra(TAG10, experience.divisa)
