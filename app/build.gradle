@@ -16,6 +16,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+                Properties properties = new Properties()
+                if (rootProject.file("local.properties").exists()) {
+                    properties.load(rootProject.file("local.properties").newDataInputStream())
+                }
+
+                manifestPlaceholders = [ mapsApiKey : properties.getProperty("MAPS_API_KEY", "") ]
+
     }
 
     buildTypes {
@@ -55,6 +63,7 @@ dependencies {
     implementation "androidx.room:room-ktx:2.2.6"
     kapt "androidx.room:room-compiler:2.2.6"
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 
 }

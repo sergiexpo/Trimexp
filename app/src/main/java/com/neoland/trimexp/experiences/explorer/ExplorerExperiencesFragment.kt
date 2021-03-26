@@ -20,10 +20,9 @@ import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Comp
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG3
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG4
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG6
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG7
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG8
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG9
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesAdapter
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG98
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG99
 import kotlinx.coroutines.launch
 
 class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterface {
@@ -121,7 +120,11 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
             intent.putExtra(TAG9, experience.price)
             intent.putExtra(TAG10, experience.divisa)
             intent.putExtra(TAG11, experience.adress)
-            intent.putExtra(TAG12, experience.fkUserId)
+            intent.putExtra(TAG12, experience.fkUserIdOwner)
+
+            intent.putExtra(TAG98, experience.latitud)
+            intent.putExtra(TAG99, experience.longitud)
+
             it.startActivity(intent)
         }
 

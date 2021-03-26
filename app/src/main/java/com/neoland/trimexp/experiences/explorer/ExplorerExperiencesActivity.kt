@@ -41,6 +41,8 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         const val TAG11 = "Adress"
         const val TAG12 = "Owner"
         const val TAG20 = "UniqueDateFromHomeScreen"
+        const val TAG98 = "Lat"
+        const val TAG99 = "Long"
 
     }
 

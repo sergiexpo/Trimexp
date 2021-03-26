@@ -242,9 +242,9 @@
 
                     <ImageView
                         android:id="@+id/imageView_payment"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        app:srcCompat="@mipmap/icon_location" />
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@mipmap/icon_payment_methods" />
 
                     <TextView
                         android:id="@+id/textView_paymentDetailExp"
@@ -264,9 +264,9 @@
 
                     <ImageView
                         android:id="@+id/imageView_price"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        app:srcCompat="@mipmap/icon_location" />
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@mipmap/icon_price" />
 
                     <TextView
                         android:id="@+id/textView_priceDetailExp"
@@ -288,10 +288,11 @@
                 android:layout_marginTop="12dp"
                 android:background="@color/orange_2" />
 
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView_DetailExp"
+            <fragment
+                android:id="@+id/fragment_map"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="280dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_marginTop="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"/>
@@ -304,11 +305,11 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp">
 
-                    <ImageView
-                        android:id="@+id/imageView_adress"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        app:srcCompat="@mipmap/icon_location" />
+                <ImageView
+                    android:id="@+id/imageView_adress"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@mipmap/icon_location2" />
 
                     <TextView
                         android:id="@+id/textView_adressDetailExp"
@@ -367,12 +368,16 @@
                             android:textStyle="bold"
                             android:layout_weight="2"/>
 
-                        <ImageView
+                        <Button
                             android:id="@+id/imageView_addUser"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:backgroundTint="@color/white"
                             android:gravity="end"
-                            app:srcCompat="@mipmap/icon_location"/>
+                            app:icon="@mipmap/icon_add_user"
+                            app:iconGravity="textEnd"
+                            app:iconSize="24dp"
+                            app:iconTint="@color/orange_1" />
                     </LinearLayout>
 
                     <RatingBar
@@ -432,7 +437,7 @@
                     android:id="@+id/button_reserve"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#EC8800"
+                    android:backgroundTint="@color/orange_1"
                     android:text="Reserve"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"

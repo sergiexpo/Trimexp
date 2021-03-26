@@ -154,6 +154,43 @@ tools:openDrawer="start" >
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <LinearLayout
+            android:id="@+id/linearLayout_userOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_explore">
+
+        <EditText
+            android:id="@+id/editText_signIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:text="Sign In"
+            android:textSize="14dp"
+            android:layout_weight="1"
+             />
+
+
+            <EditText
+                android:id="@+id/editText_logIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:text="Log In"
+                android:textSize="14dp"
+                android:layout_weight="1"
+                />
+
+       </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -164,7 +201,8 @@ tools:openDrawer="start" >
         android:background="@color/blue_1"
         android:fitsSystemWindows="true"
         app:itemBackground="@android:color/transparent"
-        app:menu="@menu/menu_home"/>
+        app:menu="@menu/menu_home"
+        android:visibility="gone"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

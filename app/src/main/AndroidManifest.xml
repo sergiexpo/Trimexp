@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.neoland.trimexp">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,6 +24,10 @@
         <activity android:name=".home.HomeActivity"/>
         <activity android:name=".experiences.explorer.ExplorerExperiencesActivity"/>
         <activity android:name=".experiences.detail.ExperienceDetailActivity"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${mapsApiKey}" />
 
     </application>
 

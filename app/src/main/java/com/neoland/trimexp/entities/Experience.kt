@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(foreignKeys = [ForeignKey(entity = User::class,
     parentColumns = arrayOf("userId"),
-    childColumns = arrayOf("fkUserId"),
+    childColumns = arrayOf("fkUserIdOwner"),
     onDelete = ForeignKey.SET_NULL)]
 )
 data class Experience (var title: String,
@@ -15,16 +15,17 @@ data class Experience (var title: String,
                        var description: String,
                        var location: String,
                        var adress: String = " ",
+                       var latitud: Double,
+                       var longitud: Double,
                        var duration: String,
                        var isNovelty: Boolean,
                        var typeExperience: String, // Host o Guest
                        var price: String,
-                       var divisa: String = " ",
-                       var owner: String,            // Aqui habrá que poner que sea de la clase USER
+                       var divisa: String = " ",           // Aqui habrá que poner que sea de la clase USER
                        var requester: String?,      // Aqui habrá que poner que sea de la clase USER
                        var dateFrom: Long, //Fecha única
                        var dateTo : Long?,
-                       var fkUserId : Int? = null
+                       var fkUserIdOwner : Int? = null
 
 ) {
 

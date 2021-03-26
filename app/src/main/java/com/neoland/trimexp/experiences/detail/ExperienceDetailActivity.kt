@@ -1,9 +1,17 @@
 package com.neoland.trimexp.experiences.detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.neoland.trimexp.R
 import com.neoland.trimexp.databinding.ActivityDetailExperienceBinding
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG1
@@ -15,16 +23,19 @@ import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Comp
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG4
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG6
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG9
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG98
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG99
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesFragmentViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class ExperienceDetailActivity: AppCompatActivity() {
+class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding : ActivityDetailExperienceBinding
     private lateinit var model: ExperienceDetailViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +64,28 @@ class ExperienceDetailActivity: AppCompatActivity() {
             binding.imageViewPhotoUser.setImageResource(user.mainPhoto)
         }
 
+        ///// MAPA
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+
     }
 
 
     private fun goBackExplorerActivity(){
         onBackPressed()
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+
+         var lat = intent.getDoubleExtra(TAG98, 0.0)
+         var long = intent.getDoubleExtra(TAG99, 0.0)
+
+            val location = LatLng(lat, long)
+            googleMap.addMarker(MarkerOptions().position(location).title("${intent.getStringExtra(TAG2)}"))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15F))
+
+
     }
 
 }
