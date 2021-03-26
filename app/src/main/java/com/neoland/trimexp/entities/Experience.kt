@@ -1,10 +1,15 @@
 package com.neoland.trimexp.entities
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity
+@Entity(foreignKeys = [ForeignKey(entity = User::class,
+    parentColumns = arrayOf("userId"),
+    childColumns = arrayOf("fkUserId"),
+    onDelete = ForeignKey.SET_NULL)]
+)
 data class Experience (var title: String,
                        var mainPhoto: Int,
                        var description: String,
@@ -18,7 +23,8 @@ data class Experience (var title: String,
                        var owner: String,            // Aqui habrá que poner que sea de la clase USER
                        var requester: String?,      // Aqui habrá que poner que sea de la clase USER
                        var dateFrom: Long, //Fecha única
-                       var dateTo : Long?
+                       var dateTo : Long?,
+                       var fkUserId : Int? = null
 
 ) {
 

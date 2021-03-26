@@ -69,7 +69,7 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
 
     override fun onResume() {
         super.onResume()
-        model.getAllExperiences()
+      //  model.getAllExperiences()
     }
 
 
@@ -86,24 +86,26 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
         }
     }
 
-    fun sortExperiences(sortType : SortTypes){
-        when (sortType){
+    fun sortExperiences(sortType : SortTypes) {
+        lifecycleScope.launchWhenCreated {
+            when (sortType) {
+                SortTypes.BY_NAME_ASCENDING -> model.sortExperiencesByAscendingName()
+                SortTypes.BY_NAME_DESCENDING -> model.sortExperiencesByDescendingName()
 
-            SortTypes.BY_NAME_ASCENDING -> model.sortExperiencesByAscendingName()
-            SortTypes.BY_NAME_DESCENDING -> model.sortExperiencesByDescendingName()
-
+            }
         }
     }
 
     fun filterExperiences(filterType : FilterTypes, date: Long = 0){
-        when (filterType){
+        lifecycleScope.launchWhenCreated {      //Esperamos a que el onCreate haya finalizado
+            when (filterType){
+                FilterTypes.FROM_DATE -> model.filterExperiencesFromDate(date)
+                FilterTypes.FREE -> model.filterExperiencesFree()
+                FilterTypes.ALL -> model.filterExperiencesAll(date)
 
-            FilterTypes.FROM_DATE -> model.filterExperiencesFromDate(date)
-            FilterTypes.FREE -> model.filterExperiencesFree()
-            FilterTypes.ALL -> model.filterExperiencesAll(date)
-
-
+            }
         }
+
     }
 
 
@@ -119,7 +121,7 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
             intent.putExtra(TAG9, experience.price)
             intent.putExtra(TAG10, experience.divisa)
             intent.putExtra(TAG11, experience.adress)
-            intent.putExtra(TAG12, experience.owner)
+            intent.putExtra(TAG12, experience.fkUserId)
             it.startActivity(intent)
         }
 

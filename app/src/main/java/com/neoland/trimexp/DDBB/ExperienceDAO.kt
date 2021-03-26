@@ -3,6 +3,7 @@ package com.neoland.trimexp.DDBB
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.neoland.trimexp.entities.Experience
+import com.neoland.trimexp.entities.UserWithExperience
 
 @Dao
 interface ExperienceDAO {
@@ -12,6 +13,9 @@ interface ExperienceDAO {
 
     @Query("SELECT * FROM Experience")
     fun getAllLive(): LiveData<List<Experience>>
+
+  /*  @Query("SELECT * FROM Experience INNER JOIN User ON Experience.fkUserId = User.id")
+    fun getExperienceByUser(): List<UserWithExperience> */
 
     @Insert
     fun insert(experience: Experience)

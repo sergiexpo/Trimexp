@@ -14,6 +14,9 @@ interface UserDAO {
     @Query("SELECT * FROM User")
     fun getAllLive(): LiveData<List<User>>
 
+    @Query("SELECT * FROM User WHERE User.userId = :id")
+    fun getUser(id: Int): User
+
     @Insert
     fun insert(user: User)
 

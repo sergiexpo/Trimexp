@@ -36,6 +36,8 @@ class HomeActivity: AppCompatActivity() {
             binding.drawerLayout.openDrawer(Gravity.LEFT)
         }
 
+        binding.editTextDates.keyListener = null
+
         binding.editTextDates.setText("${formatDate(Date())}")
 
         binding.editTextDates.setOnClickListener(){

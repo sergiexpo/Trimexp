@@ -89,7 +89,7 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
     private fun changeFragment(fragment : Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.frameLayoutExperiences.id, fragment)
-        fragmentTransaction.addToBackStack(null)
+      //  fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
 
@@ -141,9 +141,7 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
 
 
     private fun goBackHomeActivity(){
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
-        finish()
+        onBackPressed()
     }
 
 

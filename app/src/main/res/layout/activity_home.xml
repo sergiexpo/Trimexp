@@ -134,11 +134,10 @@ tools:openDrawer="start" >
                 android:id="@+id/editText_dates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="When? (Today)"
-                android:textColorHint="#FFFFFF"
+                android:inputType="none"
                 android:textColor="#FFFFFF"
-                android:layout_marginStart="4dp" />
+                android:layout_marginStart="4dp"
+                />
         </LinearLayout>
 
 
