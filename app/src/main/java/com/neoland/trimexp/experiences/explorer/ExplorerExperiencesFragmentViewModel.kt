@@ -1,19 +1,17 @@
 package com.neoland.trimexp.experiences.explorer
 
 import android.app.Application
-import android.util.Log
+import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.neoland.trimexp.DDBB.Db
-import com.neoland.trimexp.R
 import com.neoland.trimexp.entities.Experience
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ExplorerExperiencesFragmentViewModel (application: Application) : AndroidViewModel(application) {
+class ExplorerExperiencesFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
     val experiences : MutableLiveData<List<Experience>> = MutableLiveData()
 
@@ -28,7 +26,7 @@ class ExplorerExperiencesFragmentViewModel (application: Application) : AndroidV
 
     }
 
-    fun manage(managedFunction: (experiences : List<Experience>) -> List<Experience>){
+    fun manage(managedFunction: (experiences: List<Experience>) -> List<Experience>){
 
         viewModelScope.launch(Dispatchers.IO) {
             val list = Db.getDatabase(getApplication()).experienceDao().getAll()
@@ -39,6 +37,28 @@ class ExplorerExperiencesFragmentViewModel (application: Application) : AndroidV
 
     }
 
+
+
+
+
+    fun getExplorerExperiencesList(lat: Double, long: Double, date: Long) {
+
+        var currentLocation = Location("Current")
+        currentLocation.latitude = lat
+        currentLocation.longitude = long
+
+        var experienceLocation = Location("Experience")
+
+        manage { unFilteredList ->
+            unFilteredList.filter { experience ->
+                experience.dateFrom > date
+            }.sortedBy {
+                experienceLocation.latitude = it.latitud
+                experienceLocation.longitude = it.longitud
+                currentLocation.distanceTo(experienceLocation)
+            }
+        }
+    }
 
 
     //////// SORT FUNCTIONS ////////
@@ -112,6 +132,7 @@ class ExplorerExperiencesFragmentViewModel (application: Application) : AndroidV
         experiences.value = experiences.value?.filter { experience ->
             experience.typeExperience == "Guest"}
     }
+
 
 
 }

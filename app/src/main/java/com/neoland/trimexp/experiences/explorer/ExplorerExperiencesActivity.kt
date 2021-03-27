@@ -1,19 +1,17 @@
 package com.neoland.trimexp.experiences.explorer
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.Window
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.maps.model.LatLng
 import com.neoland.trimexp.R
 import com.neoland.trimexp.databinding.ActivityExplorerExperienceBinding
-import com.neoland.trimexp.home.HomeActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,8 +20,13 @@ import java.util.*
 class ExplorerExperiencesActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityExplorerExperienceBinding
-    private var fragment = ExplorerExperiencesFragment()
+    private var fragmentList = ExplorerExperiencesFragment()
+    private var fragmentMap = ExplorerExperiencesMapFragment()
     private var date : Long = 0
+
+    private var lat = 0.0
+    private var long = 0.0
+    private var location = LatLng(0.0, 0.0)
 
     companion object {
         const val TAG1 = "Photo"
@@ -43,6 +46,8 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         const val TAG20 = "UniqueDateFromHomeScreen"
         const val TAG98 = "Lat"
         const val TAG99 = "Long"
+        const val TAG100 = "Current Lat"
+        const val TAG101 = " Current Long"
 
     }
 
@@ -53,13 +58,24 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
 
         date = intent.getLongExtra(TAG20, 0L)
 
+        lat = 41.408141                 //TEMPORAL
+        long = 2.158466                 //TEMPORAL
+        location = LatLng(lat, long)    //TEMPORAL
+
+
+
         binding.textViewSearch.text = convertLongToFormattedDate(date)
 
         lifecycleScope.launch {
             lifecycleScope.async(Dispatchers.IO)  {
-                changeFragment(fragment)
+                fragmentList.arguments = Bundle().apply {
+                    putLong("LONG", date)
+                    putDouble("LATITUD", lat)
+                    putDouble("LONGITUD", long)}
+                changeFragment(fragmentList)
             } .await()
-            fragment.filterExperiences(ExplorerExperiencesFragment.FilterTypes.FROM_DATE, date )
+            //fragmentList.filterExperiences(ExplorerExperiencesFragment.FilterTypes.FROM_DATE)
+            fragmentList.explorerExperiences()
         }
 
 
@@ -72,13 +88,21 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
             when (itemSelected.itemId){
 
                 R.id.option_sort-> {
+                    if (!fragmentList.isVisible) {
+                        changeFragment(fragmentList)
+                    }
                     showDialogSort()
                 }
                 R.id.option_filter -> {
+                    if (!fragmentList.isVisible) {
+                        changeFragment(fragmentList)
+                    }
                     showDialogFilter()
                 }
                 R.id.option_map -> {
-
+                    if (!fragmentMap.isVisible) {
+                        changeFragment(fragmentMap)
+                    }
                 }
             }
             true
@@ -108,11 +132,11 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
 
         sortButtonAscName.setOnClickListener {
             dialog.dismiss()
-            fragment.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_ASCENDING)
+            fragmentList.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_ASCENDING)
         }
         sortButtonDescName.setOnClickListener {
             dialog.dismiss()
-            fragment.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_DESCENDING)
+            fragmentList.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_DESCENDING)
         }
         dialog.show()
     }
@@ -129,12 +153,12 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
 
         filterButtonAll.setOnClickListener {
             dialog.dismiss()
-            fragment.filterExperiences(ExplorerExperiencesFragment.FilterTypes.ALL, date)
+            fragmentList.filterExperiences(ExplorerExperiencesFragment.FilterTypes.ALL)
         }
 
         filterButtonFree.setOnClickListener {
             dialog.dismiss()
-            fragment.filterExperiences(ExplorerExperiencesFragment.FilterTypes.FREE)
+            fragmentList.filterExperiences(ExplorerExperiencesFragment.FilterTypes.FREE)
         }
 
         dialog.show()

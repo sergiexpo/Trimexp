@@ -1,5 +1,6 @@
 package com.neoland.trimexp.entities
 
+import android.location.Location
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -38,4 +39,20 @@ data class Experience (var title: String,
 
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0
+
+
+
+    fun getDistanceFromUserCurrenLocation(currentLat: Double, currentLong: Double) : Float{
+
+        var currentLocation = Location("Current")
+        currentLocation.latitude = currentLat
+        currentLocation.longitude = currentLong
+
+        var experienceLocation = Location("Experience")
+        experienceLocation.latitude = latitud
+        experienceLocation.longitude = longitud
+
+        return currentLocation.distanceTo(experienceLocation)
+    }
+
 }

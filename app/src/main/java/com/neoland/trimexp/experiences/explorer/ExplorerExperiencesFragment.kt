@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.maps.model.LatLng
 import com.neoland.trimexp.databinding.FragmentExperienceslistBinding
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.experiences.detail.ExperienceDetailActivity
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG1
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG10
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG100
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG101
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG11
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG12
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG2
@@ -30,6 +33,12 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
     private lateinit var binding: FragmentExperienceslistBinding
     private lateinit var model : ExplorerExperiencesFragmentViewModel
     private var adapter = ExplorerExperiencesAdapter(this)
+
+    private var date: Long = 0L
+
+    private var lat = 0.0
+    private var long = 0.0
+    private var location = LatLng(0.0, 0.0)
 
     enum class SortTypes {
         BY_NAME_ASCENDING,
@@ -60,19 +69,29 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        date = arguments?.getLong("LONG") ?: 0
+
+        lat = arguments?.getDouble("LATITUD") ?: 0.0
+        long = arguments?.getDouble("LONGITUD") ?: 0.0
+        location = LatLng(lat, long)
+
         createRecyclerView()
 
         observeModelExperiences()
+
+
 
     }
 
     override fun onResume() {
         super.onResume()
-      //  model.getAllExperiences()
+        explorerExperiences()
     }
 
 
     private fun createRecyclerView() {
+        adapter.lat = lat
+        adapter.long = long
         binding.recyclerViewExperiences.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewExperiences.adapter = adapter
     }
@@ -86,7 +105,7 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
     }
 
     fun sortExperiences(sortType : SortTypes) {
-        lifecycleScope.launchWhenCreated {
+        lifecycleScope.launchWhenResumed {
             when (sortType) {
                 SortTypes.BY_NAME_ASCENDING -> model.sortExperiencesByAscendingName()
                 SortTypes.BY_NAME_DESCENDING -> model.sortExperiencesByDescendingName()
@@ -95,8 +114,8 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
         }
     }
 
-    fun filterExperiences(filterType : FilterTypes, date: Long = 0){
-        lifecycleScope.launchWhenCreated {      //Esperamos a que el onCreate haya finalizado
+    fun filterExperiences(filterType : FilterTypes){
+        lifecycleScope.launchWhenResumed {      //Esperamos a que el onCreate haya finalizado
             when (filterType){
                 FilterTypes.FROM_DATE -> model.filterExperiencesFromDate(date)
                 FilterTypes.FREE -> model.filterExperiencesFree()
@@ -105,6 +124,12 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
             }
         }
 
+    }
+
+    fun explorerExperiences(){
+        lifecycleScope.launchWhenResumed {
+            model.getExplorerExperiencesList(lat, long, date)
+        }
     }
 
 
@@ -124,6 +149,9 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
 
             intent.putExtra(TAG98, experience.latitud)
             intent.putExtra(TAG99, experience.longitud)
+
+            intent.putExtra(TAG100, lat)
+            intent.putExtra(TAG101, long)
 
             it.startActivity(intent)
         }

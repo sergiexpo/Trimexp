@@ -1,6 +1,7 @@
 package com.neoland.trimexp.experiences.detail
 
 import android.app.Application
+import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.neoland.trimexp.DDBB.Db
@@ -18,6 +19,8 @@ class ExperienceDetailViewModel (application: Application) : AndroidViewModel(ap
             Db.getDatabase(getApplication()).userDAO().getUser(id)
         }
     }
+
+
 
 
 }
