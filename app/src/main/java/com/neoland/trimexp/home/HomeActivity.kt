@@ -1,14 +1,27 @@
 package com.neoland.trimexp.home
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.Gravity
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.neoland.trimexp.databinding.ActivityHomeBinding
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.neoland.trimexp.R
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesFragment
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,7 +31,14 @@ class HomeActivity: AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
     private lateinit var model: HomeActivityViewModel
     private var dateUnique: Long = 0
+    private var currentUserLat = 0.0
+    private var currentUserLong = 0.0
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    companion object {
+        private const val REQUEST_CODE = 99
+    }
 
 
 
@@ -28,6 +48,8 @@ class HomeActivity: AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         model = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
 
         binding.imageViewLogAct.setImageResource(model.getLoginActivityImage())
@@ -36,9 +58,19 @@ class HomeActivity: AppCompatActivity() {
             binding.drawerLayout.openDrawer(Gravity.LEFT)
         }
 
-        binding.editTextDates.keyListener = null
 
-        binding.editTextDates.setText("${formatDate(Date())}")
+       // binding.editTextLocation.keyListener = null
+        binding.editTextDates.keyListener = null
+        binding.editTextLogIn.keyListener = null
+
+        checkCurrentUserLocation()
+        checkDate()
+
+        binding.editTextLocation.setOnClickListener {
+
+            //AÑADIR UNA CIUDAD DE UNA LISTA EXISTENTE, y calcular coordenadas
+
+        }
 
         binding.editTextDates.setOnClickListener(){
 
@@ -75,28 +107,104 @@ class HomeActivity: AppCompatActivity() {
         }
 
 
+        binding.editTextLogIn.setOnClickListener {
+            showDialogLogIn()
+        }
+
+
+
+
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_CODE -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                checkCurrentUserLocation()
+            } else {
+                binding.editTextLocation.setText("Location can not be found")
+            }
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    private fun checkCurrentUserLocation() {
+        if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+            fusedLocationClient.lastLocation.addOnSuccessListener {
+
+                currentUserLat = it.latitude
+                currentUserLong = it.longitude
+                val adress = getAddress(currentUserLat,currentUserLong)
+                binding.editTextLocation.setText(adress)
+            }
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
+        }
+    }
+
+    private fun checkDate(){
+        binding.editTextDates.setText("${formatDate(Date())}")
+        dateUnique = Calendar.getInstance().timeInMillis
     }
 
 
     private fun startExplorerExperienceActivity(){
         val intent = Intent(this, ExplorerExperiencesActivity::class.java)
 
-        if (dateUnique == 0L){
+  /*      if (dateUnique == 0L){
             dateUnique = Calendar.getInstance().timeInMillis
-        }
+        } */
 
-        intent.putExtra(ExplorerExperiencesActivity.TAG20, dateUnique)
+    /*    if(lat == 0.0 || long == 0.0){
+            checkLocation()    //Hacer algo para que espere
+        } */
+
+        intent.putExtra(ExplorerExperiencesActivity.TAG31, currentUserLat)
+        intent.putExtra(ExplorerExperiencesActivity.TAG32, currentUserLong)
+        intent.putExtra(ExplorerExperiencesActivity.TAG30, dateUnique)
 
         startActivity(intent)
     }
 
 
     private fun formatDate(date: Date) : String{
-        var simpleDateFormat = SimpleDateFormat("EEE., dd MMM. yyyy")
+        var simpleDateFormat = SimpleDateFormat("EEE, dd MMM yyyy")
         return simpleDateFormat.format(date.time)
 
     }
 
+    private fun getAddress(lat: Double, lng: Double): String {
+        val geocoder = Geocoder(this)
+        val list = geocoder.getFromLocation(lat, lng, 1)
+        return list[0].locality + ", " + list[0].postalCode + ", " + list[0].countryName
+    }
+
+
+
+    private fun showDialogLogIn() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.options_menu_login)
+
+        val textViewTitle = dialog.findViewById(R.id.textView_titleLogin) as TextView
+        val editTextEmail = dialog.findViewById(R.id.editText_email) as EditText
+        val editTextPassword = dialog.findViewById(R.id.editText_Password) as EditText
+        val buttonCancel = dialog.findViewById(R.id.button_cancel) as Button
+        val buttonLogIn = dialog.findViewById(R.id.button_logIn) as Button
+
+        buttonCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        buttonLogIn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
 
 
 

@@ -9,23 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.maps.model.LatLng
 import com.neoland.trimexp.databinding.FragmentExperienceslistBinding
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.experiences.detail.ExperienceDetailActivity
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG1
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG31
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG32
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG20
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG10
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG100
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG101
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG11
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG12
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG2
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG3
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG4
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG6
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG9
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG98
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG99
 import kotlinx.coroutines.launch
 
 class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterface {
@@ -38,7 +28,6 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
 
     private var lat = 0.0
     private var long = 0.0
-    private var location = LatLng(0.0, 0.0)
 
     enum class SortTypes {
         BY_NAME_ASCENDING,
@@ -70,17 +59,12 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
         super.onViewCreated(view, savedInstanceState)
 
         date = arguments?.getLong("LONG") ?: 0
-
         lat = arguments?.getDouble("LATITUD") ?: 0.0
         long = arguments?.getDouble("LONGITUD") ?: 0.0
-        location = LatLng(lat, long)
 
         createRecyclerView()
 
         observeModelExperiences()
-
-
-
     }
 
     override fun onResume() {
@@ -137,21 +121,11 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
 
         activity?.let{
             val intent = Intent(it, ExperienceDetailActivity::class.java)
-            intent.putExtra(TAG1, experience.mainPhoto)
-            intent.putExtra(TAG2, experience.title)
-            intent.putExtra(TAG3, experience.description)
-            intent.putExtra(TAG4, experience.dateFrom)
-            intent.putExtra(TAG6, experience.duration)
-            intent.putExtra(TAG9, experience.price)
-            intent.putExtra(TAG10, experience.divisa)
-            intent.putExtra(TAG11, experience.adress)
-            intent.putExtra(TAG12, experience.fkUserIdOwner)
 
-            intent.putExtra(TAG98, experience.latitud)
-            intent.putExtra(TAG99, experience.longitud)
-
-            intent.putExtra(TAG100, lat)
-            intent.putExtra(TAG101, long)
+            intent.putExtra(TAG10, experience.id)
+            intent.putExtra(TAG20, experience.fkUserIdOwner)
+            intent.putExtra(TAG31, lat)
+            intent.putExtra(TAG32, long)
 
             it.startActivity(intent)
         }

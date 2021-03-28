@@ -1,13 +1,13 @@
 package com.neoland.trimexp.experiences.explorer
 
 import android.app.Dialog
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.Window
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.maps.model.LatLng
 import com.neoland.trimexp.R
 import com.neoland.trimexp.databinding.ActivityExplorerExperienceBinding
 import kotlinx.coroutines.Dispatchers
@@ -23,32 +23,15 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
     private var fragmentList = ExplorerExperiencesFragment()
     private var fragmentMap = ExplorerExperiencesMapFragment()
     private var date : Long = 0
-
     private var lat = 0.0
     private var long = 0.0
-    private var location = LatLng(0.0, 0.0)
 
     companion object {
-        const val TAG1 = "Photo"
-        const val TAG2 = "Title"
-        const val TAG3 = "Description"
-        const val TAG4 = "Date"
-        const val TAG45 = "Date_From"
-        const val TAG46 = "Date_To"
-        const val TAG5 = "Time"
-        const val TAG6 = "Duration"
-        const val TAG7 = "Language"
-        const val TAG8 = "Payment Methods"
-        const val TAG9 = "Price"
-        const val TAG10 = "Divisa"
-        const val TAG11 = "Adress"
-        const val TAG12 = "Owner"
-        const val TAG20 = "UniqueDateFromHomeScreen"
-        const val TAG98 = "Lat"
-        const val TAG99 = "Long"
-        const val TAG100 = "Current Lat"
-        const val TAG101 = " Current Long"
-
+        const val TAG10 = "Experience Id"
+        const val TAG20 = "Owner"
+        const val TAG30 = "UniqueDateFromHomeScreen"
+        const val TAG31 = "Current Lat"
+        const val TAG32 = " Current Long"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,15 +39,12 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         binding = ActivityExplorerExperienceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        date = intent.getLongExtra(TAG20, 0L)
-
-        lat = 41.408141                 //TEMPORAL
-        long = 2.158466                 //TEMPORAL
-        location = LatLng(lat, long)    //TEMPORAL
+        date = intent.getLongExtra(TAG30, 0L)
+        lat = intent.getDoubleExtra(TAG31, 0.0)
+        long = intent.getDoubleExtra(TAG32, 0.0)
 
 
-
-        binding.textViewSearch.text = convertLongToFormattedDate(date)
+        binding.textViewSearch.text = "  " + "${getCity(lat, long)}" + " | " + convertLongToFormattedDate(date)
 
         lifecycleScope.launch {
             lifecycleScope.async(Dispatchers.IO)  {
@@ -74,7 +54,6 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
                     putDouble("LONGITUD", long)}
                 changeFragment(fragmentList)
             } .await()
-            //fragmentList.filterExperiences(ExplorerExperiencesFragment.FilterTypes.FROM_DATE)
             fragmentList.explorerExperiences()
         }
 
@@ -101,7 +80,13 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
                 }
                 R.id.option_map -> {
                     if (!fragmentMap.isVisible) {
-                        changeFragment(fragmentMap)
+                            fragmentMap.arguments = Bundle().apply {
+                                putDouble("LATITUD", lat)
+                                putDouble("LONGITUD", long)
+                            }
+                            changeFragment(fragmentMap)
+
+
                     }
                 }
             }
@@ -174,8 +159,15 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
 
     private fun convertLongToFormattedDate(time: Long): String {
         val date = Date(time)
-        val simpleDateFormat = SimpleDateFormat("EEE., dd MMM. yyyy")
+        val simpleDateFormat = SimpleDateFormat("EEE, dd MMM yyyy")
         return simpleDateFormat.format(date.time)
+    }
+
+
+    private fun getCity(lat: Double, lng: Double): String {
+        val geocoder = Geocoder(this)
+        val list = geocoder.getFromLocation(lat, lng, 1)
+        return list[0].locality
     }
 
 }
