@@ -1,85 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_menuLogin"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="320dp"
     android:layout_height="wrap_content"
+    android:background="#F1E9E9"
     android:orientation="vertical"
-    android:background="@color/blue_1"
     android:padding="16dp">
 
-
-    <TextView
-        android:id="@+id/textView_titleLogin"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Log in Trimexp"
-        android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:layout_height="156dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        app:srcCompat="@mipmap/logo_trimexp_1" />
+
 
     <EditText
         android:id="@+id/editText_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:textSize="16dp"
+        android:layout_marginTop="-16dp"
         android:hint="Email"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:padding="12dp"/>
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:textSize="16dp" />
 
     <EditText
         android:id="@+id/editText_Password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:textSize="16dp"
         android:hint="Pasword"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:padding="12dp"/>
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:textSize="16dp" />
 
 
-    <CheckBox
-        android:id="@+id/checkBox_rememberUser"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Remember User?"
-        android:textColor="@color/white" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp">
+
+        <CheckBox
+            android:id="@+id/checkBox_rememberUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remember User?"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="16dp">
 
         <Button
             android:id="@+id/button_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:backgroundTint="@color/orange_1"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:layout_marginEnd="8dp"/>
+            android:backgroundTint="@color/orange_1"
+            android:text="Cancel" />
 
         <Button
             android:id="@+id/button_logIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log In"
-            android:backgroundTint="@color/orange_1"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:layout_marginStart="8dp"/>
-
+            android:backgroundTint="@color/orange_1"
+            android:text="Log In" />
 
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>

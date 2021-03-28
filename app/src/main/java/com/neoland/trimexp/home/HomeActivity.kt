@@ -9,10 +9,7 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +20,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.neoland.trimexp.R
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesFragment
+import com.neoland.trimexp.users.register.RegisterUserActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -61,6 +59,7 @@ class HomeActivity: AppCompatActivity() {
 
        // binding.editTextLocation.keyListener = null
         binding.editTextDates.keyListener = null
+        binding.editTextSignIn.keyListener = null
         binding.editTextLogIn.keyListener = null
 
         checkCurrentUserLocation()
@@ -106,6 +105,9 @@ class HomeActivity: AppCompatActivity() {
             startExplorerExperienceActivity()
         }
 
+        binding.editTextSignIn.setOnClickListener {
+            startRegisterUserActivity()
+        }
 
         binding.editTextLogIn.setOnClickListener {
             showDialogLogIn()
@@ -182,16 +184,22 @@ class HomeActivity: AppCompatActivity() {
     }
 
 
+    private fun startRegisterUserActivity(){
+        val intent = Intent(this, RegisterUserActivity::class.java)
+        startActivity(intent)
+    }
+
 
     private fun showDialogLogIn() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(true)
+        //dialog.setCancelable(true)
         dialog.setContentView(R.layout.options_menu_login)
 
-        val textViewTitle = dialog.findViewById(R.id.textView_titleLogin) as TextView
+      //  val textViewTitle = dialog.findViewById(R.id.textView_titleLogin) as TextView
         val editTextEmail = dialog.findViewById(R.id.editText_email) as EditText
         val editTextPassword = dialog.findViewById(R.id.editText_Password) as EditText
+        val checkBox = dialog.findViewById(R.id.checkBox_rememberUser) as CheckBox
         val buttonCancel = dialog.findViewById(R.id.button_cancel) as Button
         val buttonLogIn = dialog.findViewById(R.id.button_logIn) as Button
 
