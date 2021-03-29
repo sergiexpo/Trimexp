@@ -24,7 +24,7 @@ class ExplorerExperiencesMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentExperiencesMapBinding
     private lateinit var model : ExplorerExperiencesFragmentViewModel
-
+    private var date : Long = 0
     private var lat = 0.0
     private var long = 0.0
 
@@ -32,7 +32,7 @@ class ExplorerExperiencesMapFragment : Fragment(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         model = ViewModelProvider(this).get(ExplorerExperiencesFragmentViewModel::class.java)
 
-        model.getAllExperiences() // TEMPORAL
+
 
     }
 
@@ -46,8 +46,11 @@ class ExplorerExperiencesMapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        date = arguments?.getLong("LONG") ?: 0L
         lat = arguments?.getDouble("LATITUD") ?: 0.0
         long = arguments?.getDouble("LONGITUD") ?: 0.0
+
+        model.getExplorerExperiencesList(lat, long, date)
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.fragment_experiencesMap) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -58,13 +61,16 @@ class ExplorerExperiencesMapFragment : Fragment(), OnMapReadyCallback {
 
         var userCurrentLocation = LatLng(lat, long)
 
-        model.experiences.value?.forEach {
-            val location = LatLng(it.latitud, it.longitud)
-            googleMap.addMarker(MarkerOptions()
-                .position(location)
-                .title("${it.title}")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_pin_experiences))
+        model.experiences.observe(viewLifecycleOwner) {
+
+            model.experiences.value?.forEach {
+                val location = LatLng(it.latitud, it.longitud)
+                googleMap.addMarker(MarkerOptions()
+                        .position(location)
+                        .title("${it.title}")
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_pin_experiences))
                 )
+            }
         }
 
         googleMap.addMarker(MarkerOptions()

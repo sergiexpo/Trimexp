@@ -1,6 +1,7 @@
 package com.neoland.trimexp.entities
 
 import android.location.Location
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -12,21 +13,22 @@ import java.util.*
     onDelete = ForeignKey.SET_NULL)]
 )
 data class Experience (var title: String,
-                       var mainPhoto: Int,
+                       var mainPhoto: Int? = null,
                        var description: String,
-                       var location: String,
+                       var location: String? = null,
                        var adress: String = " ",
                        var latitud: Double,
                        var longitud: Double,
                        var duration: String,
-                       var isNovelty: Boolean,
-                       var typeExperience: String, // Host o Guest
+                       var isNovelty: Boolean? = null,
+                       var typeExperience: String? = null, // Host o Guest
                        var price: String,
-                       var divisa: String = " ",           // Aqui habrá que poner que sea de la clase USER
+                       var currency: String = " ",
                        var requester: String?,      // Aqui habrá que poner que sea de la clase USER
                        var dateFrom: Long, //Fecha única
                        var dateTo : Long?,
-                       var fkUserIdOwner : Int? = null
+                       var fkUserIdOwner : Int? = null,
+                       @ColumnInfo(typeAffinity = ColumnInfo.BLOB) var photoExperience: ByteArray? = null
 
 ) {
 

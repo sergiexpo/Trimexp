@@ -33,12 +33,12 @@ class ExplorerExperiencesAdapter(val listener : ExplorerExperiencesAdapterInterf
         var formatDistance = DecimalFormat("#.00")
 
         holder.itemBinding.textViewTitleExp.text = experience.title
-        holder.itemBinding.imageViewPhotoExp.setImageResource(experience.mainPhoto)
+        experience.mainPhoto?.let{holder.itemBinding.imageViewPhotoExp.setImageResource(it)}
         holder.itemBinding.textViewLocation.setTextColor(Color.parseColor(colorDistance(distance)))
         holder.itemBinding.imageViewLocation.setColorFilter(Color.parseColor(colorDistance(distance)))
         holder.itemBinding.textViewLocation.text = formatDistance.format(distance).toString() + " m"
         holder.itemBinding.textViewDuration.text = experience.duration
-        holder.itemBinding.textViewPrice.text = experience.price + " " + experience.divisa
+        holder.itemBinding.textViewPrice.text = experience.price + " " + experience.currency
 
 
         holder.itemBinding.root.setOnClickListener {

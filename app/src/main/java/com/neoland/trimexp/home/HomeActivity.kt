@@ -21,6 +21,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.neoland.trimexp.R
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesFragment
+import com.neoland.trimexp.experiences.register.RegisterExperienceActivity
 import com.neoland.trimexp.users.register.RegisterUserActivity
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -53,11 +54,11 @@ class HomeActivity: AppCompatActivity() {
         model = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
 
         lifecycleScope.launch {
-            model.loadPreferences("TAG_EMAIL")?.let{
+            model.loadPreferences("TAG_EMAIL")?.let {
                 if (it.isNotEmpty()) {
                     val user = model.getUser(it)
                     binding.textViewTitle.text = "Welcome ${user.name}"
-                }else{
+                } else {
                     binding.textViewTitle.text = "Welcome Visitor"
                 }
             }
@@ -69,8 +70,23 @@ class HomeActivity: AppCompatActivity() {
             binding.drawerLayout.openDrawer(Gravity.LEFT)
         }
 
+        binding.navigationViewHome.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.menuHome_addExperience -> {
+                    startRegisterExperienceActivity()
+                }
+                else -> {
+                    return@setNavigationItemSelectedListener false
+                }
+            }
 
-        // binding.editTextLocation.keyListener = null
+            binding.drawerLayout.closeDrawers()
+            true
+        }
+
+
+
+
         binding.editTextDates.keyListener = null
         binding.editTextSignIn.keyListener = null
         binding.editTextLogIn.keyListener = null
@@ -176,7 +192,7 @@ class HomeActivity: AppCompatActivity() {
             } */
 
         intent.putExtra(ExplorerExperiencesActivity.TAG31, currentUserLat)
-        intent.putExtra(ExplorerExperiencesActivity.TAG32, currentUserLong)
+       intent.putExtra(ExplorerExperiencesActivity.TAG32, currentUserLong)
         intent.putExtra(ExplorerExperiencesActivity.TAG30, dateUnique)
 
         startActivity(intent)
@@ -201,6 +217,10 @@ class HomeActivity: AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun startRegisterExperienceActivity(){
+        val intent = Intent(this, RegisterExperienceActivity::class.java)
+        startActivity(intent)
+    }
 
     private fun showDialogLogIn() {
         val dialog = Dialog(this)

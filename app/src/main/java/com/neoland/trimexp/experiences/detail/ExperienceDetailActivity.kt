@@ -43,12 +43,12 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
 
             experience = model.getExperience(intent.getIntExtra(TAG10, 0))
 
-            binding.imageViewMainPhoto.setImageResource(experience.mainPhoto)
+            experience.mainPhoto?.let{binding.imageViewMainPhoto.setImageResource(it)}
             binding.textViewTitleDetailExp.text = experience.title
             binding.textViewDescriptionDetailExp.text = experience.description
             binding.textViewDateDetailExp.text = experience.dateFrom.toString()
             binding.textViewDurationDetailExp.text = experience.duration
-            binding.textViewPriceDetailExp .text = experience.price + " " + experience.divisa
+            binding.textViewPriceDetailExp .text = experience.price + " " + experience.currency
             binding.textViewAdressDetailExp .text = experience.adress
 
             val user =  model.getUser(intent.getIntExtra(TAG20, 0))

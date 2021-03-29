@@ -185,8 +185,7 @@ tools:openDrawer="start" >
                 android:gravity="center"
                 android:text="Log In"
                 android:textSize="14dp"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1"/>
 
        </LinearLayout>
 
@@ -201,8 +200,7 @@ tools:openDrawer="start" >
         android:background="@color/blue_1"
         android:fitsSystemWindows="true"
         app:itemBackground="@android:color/transparent"
-        app:menu="@menu/menu_home"
-        android:visibility="gone"/>
+        app:menu="@menu/menu_home"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -81,6 +81,7 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
                 R.id.option_map -> {
                     if (!fragmentMap.isVisible) {
                             fragmentMap.arguments = Bundle().apply {
+                                putLong("LONG", date)
                                 putDouble("LATITUD", lat)
                                 putDouble("LONGITUD", long)
                             }
@@ -167,7 +168,11 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
     private fun getCity(lat: Double, lng: Double): String {
         val geocoder = Geocoder(this)
         val list = geocoder.getFromLocation(lat, lng, 1)
-        return list[0].locality
+        if (list.size > 0) {
+            return list[0].locality
+        } else {
+            return "Error"
+        }
     }
 
 }

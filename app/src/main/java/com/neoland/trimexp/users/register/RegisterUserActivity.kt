@@ -51,7 +51,7 @@ class RegisterUserActivity: AppCompatActivity() {
                         binding.editTextRegisterUserNAme.text.toString(),
                         binding.editTextRegisterUserDescription.text.toString(),
                         binding.editTextRegisterUserEmail.text.toString(),
-                        binding.editTextRegisterUserPassword.toString(),
+                        binding.editTextRegisterUserPassword.text.toString(),
                         userPhoto
                 )
                 Toast.makeText(binding.root.context, "User has been added", Toast.LENGTH_LONG).show()
