@@ -17,6 +17,12 @@ interface UserDAO {
     @Query("SELECT * FROM User WHERE User.userId = :id")
     fun getUser(id: Int): User
 
+    @Query("SELECT * FROM User WHERE User.email = :email")
+    fun getUserbyEmail(email: String,): User
+
+    @Query("SELECT * FROM User WHERE User.email = :email AND User.password = :password")
+    fun isUserInDB(email: String, password: String): Boolean
+
     @Insert
     fun insert(user: User)
 

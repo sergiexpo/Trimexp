@@ -13,6 +13,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.neoland.trimexp.databinding.ActivityHomeBinding
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity
@@ -21,6 +22,7 @@ import com.google.android.gms.location.LocationServices
 import com.neoland.trimexp.R
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesFragment
 import com.neoland.trimexp.users.register.RegisterUserActivity
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -50,6 +52,17 @@ class HomeActivity: AppCompatActivity() {
 
         model = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
 
+        lifecycleScope.launch {
+            model.loadPreferences("TAG_EMAIL")?.let{
+                if (it.isNotEmpty()) {
+                    val user = model.getUser(it)
+                    binding.textViewTitle.text = "Welcome ${user.name}"
+                }else{
+                    binding.textViewTitle.text = "Welcome Visitor"
+                }
+            }
+        }
+
         binding.imageViewLogAct.setImageResource(model.getLoginActivityImage())
 
         binding.imageViewIconMenu.setOnClickListener {
@@ -57,7 +70,7 @@ class HomeActivity: AppCompatActivity() {
         }
 
 
-       // binding.editTextLocation.keyListener = null
+        // binding.editTextLocation.keyListener = null
         binding.editTextDates.keyListener = null
         binding.editTextSignIn.keyListener = null
         binding.editTextLogIn.keyListener = null
@@ -73,31 +86,31 @@ class HomeActivity: AppCompatActivity() {
 
         binding.editTextDates.setOnClickListener(){
 
-                val builder = MaterialDatePicker.Builder.dateRangePicker()
-                builder.setSelection(androidx.core.util.Pair(System.currentTimeMillis(), System.currentTimeMillis()))
-                val picker = builder.build()
-                picker.show(supportFragmentManager, picker.toString())
-                picker.addOnNegativeButtonClickListener { picker.dismiss() }
-                picker.addOnPositiveButtonClickListener {
-                    val calendar1 = Calendar.getInstance()
-                    val calendar2 = Calendar.getInstance()
+            val builder = MaterialDatePicker.Builder.dateRangePicker()
+            builder.setSelection(androidx.core.util.Pair(System.currentTimeMillis(), System.currentTimeMillis()))
+            val picker = builder.build()
+            picker.show(supportFragmentManager, picker.toString())
+            picker.addOnNegativeButtonClickListener { picker.dismiss() }
+            picker.addOnPositiveButtonClickListener {
+                val calendar1 = Calendar.getInstance()
+                val calendar2 = Calendar.getInstance()
 
-                    val date1 = it.first?.let { it1 -> Date(it1) }
-                    val date2 = it.second?.let { it2 -> Date(it2) }
-                    calendar1.time = date1
-                    calendar2.time = date2
+                val date1 = it.first?.let { it1 -> Date(it1) }
+                val date2 = it.second?.let { it2 -> Date(it2) }
+                calendar1.time = date1
+                calendar2.time = date2
 
-                    if (date1 != null && date2 != null && date1 != date2) {
+                if (date1 != null && date2 != null && date1 != date2) {
 
-                        binding.editTextDates.setText("${formatDate(date1)} - ${formatDate(date2)}")
-                        dateUnique = calendar1.timeInMillis
+                    binding.editTextDates.setText("${formatDate(date1)} - ${formatDate(date2)}")
+                    dateUnique = calendar1.timeInMillis
 
-                    } else if (date1 != null && date2 != null && date1 == date2){
+                } else if (date1 != null && date2 != null && date1 == date2){
 
-                        binding.editTextDates.setText("${formatDate(date1)}")
-                        dateUnique = calendar1.timeInMillis
-                    }
+                    binding.editTextDates.setText("${formatDate(date1)}")
+                    dateUnique = calendar1.timeInMillis
                 }
+            }
         }
 
 
@@ -112,7 +125,6 @@ class HomeActivity: AppCompatActivity() {
         binding.editTextLogIn.setOnClickListener {
             showDialogLogIn()
         }
-
 
 
 
@@ -155,13 +167,13 @@ class HomeActivity: AppCompatActivity() {
     private fun startExplorerExperienceActivity(){
         val intent = Intent(this, ExplorerExperiencesActivity::class.java)
 
-  /*      if (dateUnique == 0L){
-            dateUnique = Calendar.getInstance().timeInMillis
-        } */
+        /*      if (dateUnique == 0L){
+                  dateUnique = Calendar.getInstance().timeInMillis
+              } */
 
-    /*    if(lat == 0.0 || long == 0.0){
-            checkLocation()    //Hacer algo para que espere
-        } */
+        /*    if(lat == 0.0 || long == 0.0){
+                checkLocation()    //Hacer algo para que espere
+            } */
 
         intent.putExtra(ExplorerExperiencesActivity.TAG31, currentUserLat)
         intent.putExtra(ExplorerExperiencesActivity.TAG32, currentUserLong)
@@ -196,25 +208,57 @@ class HomeActivity: AppCompatActivity() {
         //dialog.setCancelable(true)
         dialog.setContentView(R.layout.options_menu_login)
 
-      //  val textViewTitle = dialog.findViewById(R.id.textView_titleLogin) as TextView
+
         val editTextEmail = dialog.findViewById(R.id.editText_email) as EditText
         val editTextPassword = dialog.findViewById(R.id.editText_Password) as EditText
         val checkBox = dialog.findViewById(R.id.checkBox_rememberUser) as CheckBox
         val buttonCancel = dialog.findViewById(R.id.button_cancel) as Button
         val buttonLogIn = dialog.findViewById(R.id.button_logIn) as Button
 
+
+        model.loadPreferences("TAG_EMAIL")?.let{
+            checkBox.isChecked = it.isNotEmpty()
+           editTextEmail.setText(it)
+        }
+
+        model.loadPreferences("TAG_PASS")?.let{
+            checkBox.isChecked = it.isNotEmpty()
+            editTextPassword.setText(it)
+        }
+
+
         buttonCancel.setOnClickListener {
             dialog.dismiss()
         }
 
         buttonLogIn.setOnClickListener {
-            dialog.dismiss()
-        }
 
+            lifecycleScope.launch {
+                if (model.existsUser(editTextEmail.text.toString(), editTextPassword.text.toString())) {
+
+                    if (checkBox.isEnabled && checkBox.isChecked){
+                        model.savePreferences("TAG_EMAIL", editTextEmail.text.toString())
+                        model.savePreferences("TAG_PASS", editTextPassword.text.toString())
+                    } else {
+                        model.savePreferences("TAG_EMAIL", "")
+                        model.savePreferences("TAG_PASS", "")
+                    }
+
+                    Toast.makeText(binding.root.context, "Welcome", Toast.LENGTH_LONG).show()
+                    dialog.dismiss()
+
+                    val user =  model.getUser(editTextEmail.text.toString())
+                    binding.textViewTitle.text = "Welcome ${user.name}"
+
+                } else {
+                    Toast.makeText(binding.root.context, "User or password incorrect", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
         dialog.show()
     }
 
 
 
 
-}
+    }

@@ -43,9 +43,9 @@ abstract class Db : RoomDatabase() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     CoroutineScope(Dispatchers.IO).launch {
 
-                        val users: List<User> = listOf(User("Laia", R.mipmap.user_sample_1, "Viajera callejera", "laia@gmail.com", "patata123" ),
-                            User("Goku", R.mipmap.user_sample2, "Time traveller", "ron@gmail.com", "pikachu123" ),
-                            User("Luffy", R.mipmap.user_sample3, "Descubrir nuevos lugares", "colometa@gmail.com", "pomelo123" ))
+                        val users: List<User> = listOf(User("Laia", "Viajera callejera", "laia@gmail.com", "patata123", R.mipmap.user_sample_1 ),
+                            User("Goku", "Time traveller", "ron@gmail.com", "pikachu123", R.mipmap.user_sample2 ),
+                            User("Luffy", "Descubrir nuevos lugares", "colometa@gmail.com", "pomelo123", R.mipmap.user_sample3 ))
 
                         INSTANCE?.userDAO()?.insertAll(users)
 

@@ -1,5 +1,6 @@
 package com.neoland.trimexp.experiences.detail
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -52,7 +53,8 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
 
             val user =  model.getUser(intent.getIntExtra(TAG20, 0))
             binding.textViewUserName.text = user.name
-            binding.imageViewPhotoUser.setImageResource(user.mainPhoto)
+            user.mainPhoto?.let{ binding.imageViewPhotoUser.setImageResource(it)}
+            user.photoUser?.let{binding.imageViewMainPhoto.setImageBitmap(BitmapFactory.decodeByteArray(it, 0 , it.size))}
 
             val mapFragment = supportFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment
             mapFragment.getMapAsync(this@ExperienceDetailActivity)

@@ -29,6 +29,7 @@
 
     </LinearLayout>
 
+
     <ImageView
         android:id="@+id/imageView_registerUser_logo"
         android:layout_width="220dp"
@@ -47,19 +48,40 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_registerUser_logo">
+        app:layout_constraintTop_toTopOf="@+id/imageView_registerUser_logo"
+        android:layout_marginTop="172dp">
+
+        <TextView
+            android:id="@+id/textView_registerUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Public name"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editText_registerUserNAme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="-16dp"
             android:layout_marginEnd="16dp"
             android:hint="Name"
             android:inputType="text"
             android:padding="12dp"
             android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/textView_registerUserEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:text="Email contact and Loggin"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -67,12 +89,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
             android:hint="Email"
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             android:padding="12dp"
             android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/textView_registerUserPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:text="Your password"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -80,12 +112,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
             android:hint="Password"
-            android:inputType="textEmailAddress"
+            android:inputType="textPassword"
             android:padding="12dp"
             android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/textView_registerDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:text="Tell something about you"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
 
         <EditText
@@ -93,12 +135,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
-            android:hint="Descrption"
-            android:inputType="textPassword"
+            android:hint="Description"
+            android:inputType="text"
             android:padding="12dp"
             android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/textView_registerUserPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:text="Choose a photo"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
 
     </LinearLayout>
 
@@ -108,8 +161,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/button_addUser"
@@ -128,7 +181,7 @@
         android:backgroundTint="@color/blue_1"
         android:text="Explorer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
     <Button
@@ -155,6 +208,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.876" />
+
+
+
+
 
 
 
