@@ -108,7 +108,7 @@ tools:openDrawer="start" >
                 android:hint="Where? (Near to me)"
                 android:textColorHint="#FFFFFF"
                 android:textColor="#FFFFFF"
-                android:layout_marginStart="4dp"/>
+                android:layout_marginStart="4dp" />
 
         </LinearLayout>
 

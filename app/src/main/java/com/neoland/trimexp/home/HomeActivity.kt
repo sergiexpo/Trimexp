@@ -104,7 +104,7 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
  //   binding.navigationViewHome.getHeaderView(0).findViewById(R.id.imageView_photosample)
 
 
-          //PARA PONER BONITO el menú lateral
+
 
       binding.navigationViewHome.setNavigationItemSelectedListener { item ->
 

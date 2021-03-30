@@ -165,7 +165,7 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
     }
 
 
-    private fun getCity(lat: Double, lng: Double): String {
+    private fun getCity(lat: Double, lng: Double): String? {
         val geocoder = Geocoder(this)
         val list = geocoder.getFromLocation(lat, lng, 1)
         if (list.size > 0) {
