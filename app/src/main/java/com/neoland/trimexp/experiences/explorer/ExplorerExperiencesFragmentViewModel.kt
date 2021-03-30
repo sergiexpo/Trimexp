@@ -51,7 +51,7 @@ class ExplorerExperiencesFragmentViewModel(application: Application) : AndroidVi
 
         manage { unFilteredList ->
             unFilteredList.filter { experience ->
-                experience.dateFrom > date
+                experience.dateFrom > date && !experience.isReserved
             }.sortedBy {
                 experienceLocation.latitude = it.latitud
                 experienceLocation.longitude = it.longitud

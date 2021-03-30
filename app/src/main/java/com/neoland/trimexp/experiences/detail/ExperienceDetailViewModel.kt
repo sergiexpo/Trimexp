@@ -1,9 +1,11 @@
 package com.neoland.trimexp.experiences.detail
 
 import android.app.Application
+import android.content.Context
 import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.neoland.trimexp.DDBB.App
 import com.neoland.trimexp.DDBB.Db
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.entities.User
@@ -21,13 +23,31 @@ class ExperienceDetailViewModel (application: Application) : AndroidViewModel(ap
         }
     }
 
+    suspend fun getUser(email: String): User{
+        return  withContext(Dispatchers.IO){
+            Db.getDatabase(getApplication()).userDAO().getUserbyEmail(email)
+        }
+    }
+
     suspend fun getExperience(id: Int): Experience {
         return  withContext(Dispatchers.IO){
             Db.getDatabase(getApplication()).experienceDao().getExperience(id)
         }
     }
 
+    suspend fun experienceIsReserved(experience: Experience, userID: Int) {
+        withContext(Dispatchers.IO) {
+            experience.isReserved = true
+            experience.fkUserIdRequester = userID
+            Db.getDatabase(getApplication()).experienceDao().update(experience)
+        }
+    }
 
+
+    fun loadPreferences(tag: String) : String? {
+        val sharedPreferences = getApplication<App>().getSharedPreferences("Preferencias", Context.MODE_PRIVATE)
+        return sharedPreferences.getString(tag, "")
+    }
 
 
 }

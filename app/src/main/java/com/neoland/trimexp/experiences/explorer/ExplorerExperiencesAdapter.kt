@@ -1,5 +1,6 @@
 package com.neoland.trimexp.experiences.explorer
 
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class ExplorerExperiencesAdapter(val listener : ExplorerExperiencesAdapterInterf
 
         holder.itemBinding.textViewTitleExp.text = experience.title
         experience.mainPhoto?.let{holder.itemBinding.imageViewPhotoExp.setImageResource(it)}
+        experience.photoExperience?.let{holder.itemBinding.imageViewPhotoExp.setImageBitmap(BitmapFactory.decodeByteArray(it, 0 , it.size))}
         holder.itemBinding.textViewLocation.setTextColor(Color.parseColor(colorDistance(distance)))
         holder.itemBinding.imageViewLocation.setColorFilter(Color.parseColor(colorDistance(distance)))
         holder.itemBinding.textViewLocation.text = formatDistance.format(distance).toString() + " m"

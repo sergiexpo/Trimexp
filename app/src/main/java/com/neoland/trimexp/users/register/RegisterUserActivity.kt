@@ -21,6 +21,7 @@ class RegisterUserActivity: AppCompatActivity() {
     lateinit var model: RegisterUserActivityViewModel
     private var userPhoto : Bitmap? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterUserBinding.inflate(layoutInflater)

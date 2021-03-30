@@ -109,6 +109,7 @@ tools:openDrawer="start" >
                 android:textColorHint="#FFFFFF"
                 android:textColor="#FFFFFF"
                 android:layout_marginStart="4dp"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -189,6 +190,17 @@ tools:openDrawer="start" >
 
        </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_places_suggestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_location"
+            tools:itemCount="5"
+            tools:listitem="@layout/card_places_list"
+            android:elevation="2dp"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -200,6 +212,7 @@ tools:openDrawer="start" >
         android:background="@color/blue_1"
         android:fitsSystemWindows="true"
         app:itemBackground="@android:color/transparent"
+        app:headerLayout="@layout/panel_lat_menu_home"
         app:menu="@menu/menu_home"/>
 
 

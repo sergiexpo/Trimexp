@@ -21,7 +21,7 @@ android {
                 if (rootProject.file("local.properties").exists()) {
                     properties.load(rootProject.file("local.properties").newDataInputStream())
                 }
-
+                buildConfigField "String", "MAPS_API_KEY", "\"" + properties.getProperty("MAPS_API_KEY", "") + "\""
                 manifestPlaceholders = [ mapsApiKey : properties.getProperty("MAPS_API_KEY", "") ]
 
     }
@@ -65,6 +65,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
 
 
 }
