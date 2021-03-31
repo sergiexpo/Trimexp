@@ -3,14 +3,13 @@ package com.neoland.trimexp.users.favourites
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.neoland.trimexp.databinding.ActivityExperienceUserManageBinding
 import com.neoland.trimexp.databinding.ActivityUserListFavouriteusersBinding
 import com.neoland.trimexp.experiences.manage.ManageExperienceFragment
 
 class FavouriteUsersListActivity  : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserListFavouriteusersBinding
-    private var fragment = ManageExperienceFragment()
+    private var fragment = FavouriteUsersListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

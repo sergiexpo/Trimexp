@@ -17,6 +17,10 @@ interface UsersFavouritesDAO {
         @Query("SELECT * FROM UsersFavourites WHERE UsersFavourites.fkuserID = :id")
         fun getUserFavourites(id: Int): List<UsersFavourites>
 
+        @Query("SELECT * FROM UsersFavourites WHERE UsersFavourites.fkuserID = :userId AND UsersFavourites.fkuserFavouriteID = :userFavoriteId")
+        fun getUserFavourite(userId: Int, userFavoriteId: Int): UsersFavourites
+
+
         @Insert
         fun insert(userFavourites: UsersFavourites)
 
@@ -24,12 +28,14 @@ interface UsersFavouritesDAO {
         fun update(userFavourites: UsersFavourites)
 
         @Insert
-        fun insertAll(userFavourites: List<User>)
+        fun insertAll(userFavourites: List<UsersFavourites>)
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun insertAllMutable(userFavourites: MutableList<UsersFavourites>?)
 
         @Delete
         fun delete(userFavourites: UsersFavourites)
+
+
 
 }

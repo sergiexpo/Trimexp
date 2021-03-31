@@ -124,7 +124,7 @@ class ManageExperienceFragment : Fragment(), ManageExperienceAdapterInterface {
 
         val builder = AlertDialog.Builder(binding.root.context)
 
-        builder.setMessage("User will be removed. Are you sure?")
+        builder.setMessage("Experience will be removed. Are you sure?")
 
         builder.setPositiveButton("Yes"){ dialog, id ->
             model.deleteExperience(experience, userId)

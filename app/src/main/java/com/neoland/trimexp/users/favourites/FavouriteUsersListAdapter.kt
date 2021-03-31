@@ -18,7 +18,7 @@ interface FavouriteUsersListAdapterInterface{
     fun onItemClick(user: User)
 }
 
-class FavouriteUsersListAdapter(private val listener : ManageExperienceAdapterInterface, private val userId: Int) : RecyclerView.Adapter<FavouriteUsersListAdapter.ExperienceViewHolder>()  {
+class FavouriteUsersListAdapter(private val listener : FavouriteUsersListAdapterInterface, private val userId: Int) : RecyclerView.Adapter<FavouriteUsersListAdapter.ExperienceViewHolder>()  {
 
     var users = listOf<User>()
 
@@ -38,8 +38,12 @@ class FavouriteUsersListAdapter(private val listener : ManageExperienceAdapterIn
         var user = users[position]
 
        user.photoUser?.let{holder.itemBinding.imageViewPhotoUserFav.setImageBitmap(BitmapFactory.decodeByteArray(it, 0 , it.size))}
+        user.mainPhoto?.let{holder.itemBinding.imageViewPhotoUserFav.setImageResource(it)}
        holder.itemBinding.textViewNameUserFav.text = user.name
 
+        holder.itemBinding.root.setOnClickListener {
+            listener.onItemClick(users[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -47,7 +51,7 @@ class FavouriteUsersListAdapter(private val listener : ManageExperienceAdapterIn
     }
 
 
-    fun updateExperiences(users: List<User>){
+    fun updateFavouriteUsers(users: List<User>){
         this.users = users
         notifyDataSetChanged()
     }

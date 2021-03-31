@@ -102,6 +102,8 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
         binding.imageViewLogAct.setImageResource(model.getLoginActivityImage())
 
 
+      //  val tvWelcome = binding.navigationViewRight.getHeaderView(0).findViewById<TextView>(R.id.tv_welcome)
+
       binding.navigationViewHome.setNavigationItemSelectedListener { item ->
 
             when (item.itemId) {

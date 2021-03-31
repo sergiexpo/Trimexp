@@ -6,8 +6,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_experience"
         android:layout_width="wrap_content"
@@ -28,13 +26,13 @@
             android:padding="4dp">
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageView_photoUserFav"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView_photoUserFav"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
 
                 <TextView
                     android:id="@+id/textView_nameUserFav"

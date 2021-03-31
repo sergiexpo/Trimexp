@@ -8,17 +8,19 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.neoland.trimexp.R
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.entities.User
+import com.neoland.trimexp.entities.UsersFavourites
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-@Database(entities = [Experience::class, DbStatus::class, User::class], version = 1)
+@Database(entities = [Experience::class, DbStatus::class, User::class, UsersFavourites::class], version = 1)
 abstract class Db : RoomDatabase() {
 
     abstract fun experienceDao(): ExperienceDAO
     abstract fun dbStatusDao(): DbStatusDao
     abstract fun userDAO(): UserDAO
+    abstract fun UsersFavouritesDAO(): UsersFavouritesDAO
 
     companion object {
 
@@ -96,6 +98,12 @@ abstract class Db : RoomDatabase() {
 
 
                         INSTANCE?.experienceDao()?.insertAll(experiences)
+
+                        val usersFavourites: List<UsersFavourites> = listOf(UsersFavourites(1,2),
+                                                                            UsersFavourites(1,3)
+                        )
+
+                        INSTANCE?.UsersFavouritesDAO()?.insertAll(usersFavourites)
 
                         INSTANCE?.dbStatusDao()?.insert(DbStatus(1, true))
 
