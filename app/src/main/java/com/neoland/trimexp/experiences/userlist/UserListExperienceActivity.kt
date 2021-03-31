@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.neoland.trimexp.R
 import com.neoland.trimexp.databinding.ActivityExplorerExperienceBinding
 import com.neoland.trimexp.databinding.ActivityUserListExperienceBinding
 import kotlinx.coroutines.Dispatchers
@@ -24,12 +25,32 @@ class UserListExperienceActivity : AppCompatActivity() {
             goBackUserListExperienceActivity()
         }
 
-        lifecycleScope.launch {
-            lifecycleScope.async(Dispatchers.IO)  {
-                changeFragment(fragment)
-            } .await()
-            fragment.getExperiencesUserList()
+
+       changeFragment(fragment)
+
+
+
+        binding.bottomNavigationViewMenuExperiencesList.setOnNavigationItemSelectedListener{ itemSelected ->
+            when (itemSelected.itemId){
+
+                R.id.option_open -> {
+                    fragment.filterExperiences(UserListExperiencesFragment.FilterExperiencesUserListTypes.OPEN )
+                    changeFragment(fragment)
+
+                }
+                R.id.option_historical -> {
+                    fragment.filterExperiences(UserListExperiencesFragment.FilterExperiencesUserListTypes.HISTORICAL )
+                    changeFragment(fragment)
+
+                }
+
+                R.id.option_wish -> {
+                    changeFragment(fragment)
+                }
+            }
+            true
         }
+
 
 
 
@@ -44,6 +65,7 @@ class UserListExperienceActivity : AppCompatActivity() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.frameLayoutExperiences.id, fragment)
         fragmentTransaction.commit()
+
     }
 
 }

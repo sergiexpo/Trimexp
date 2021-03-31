@@ -14,10 +14,13 @@
             android:id="@+id/menuHome_listExperiencesUser"
             android:title="List experiences" />
 
-
         <item
             android:id="@+id/menuHome_manageExperiencesUser"
             android:title="Manage experiences" />
+
+        <item
+            android:id="@+id/menuHome_favouritesUsers"
+            android:title="Favourite Users" />
 
         <item
             android:id="@+id/menuHome_Messages"

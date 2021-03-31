@@ -1,8 +1,7 @@
-package com.neoland.trimexp.experiences.userlist
+package com.neoland.trimexp.experiences.manage
 
 import android.app.Application
 import android.content.Context
-import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -15,7 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class UserListExperienceFragmentViewModel(application: Application) : AndroidViewModel(application) {
+class ManageExperienceFragmentViewModel (application: Application) : AndroidViewModel(application) {
 
     val experiences : MutableLiveData<List<Experience>> = MutableLiveData()
 
@@ -31,29 +30,35 @@ class UserListExperienceFragmentViewModel(application: Application) : AndroidVie
     }
 
 
+    fun getExperiencesOpen(userId : Int) {
+        getExperiences { unFilteredList ->
+            unFilteredList.filter { experience ->
+                experience.dateFrom >= Calendar.getInstance().timeInMillis && experience.fkUserIdOwner == userId
+            }.sortedBy {
+                it.dateTo
+            }
+        }
+    }
+
+    fun deleteExperience(experience: Experience, userId: Int){
+
+        viewModelScope.launch(Dispatchers.IO) {
+            Db.getDatabase(getApplication()).experienceDao().delete(experience)
+
+            getExperiencesOpen(userId)
+          /*  val allExperiences = Db.getDatabase(getApplication()).experienceDao().getAll()
+
+            withContext(Dispatchers.Main) {
+                experiences.value = allExperiences
+            } */
+        }
+
+    }
+
+
     suspend fun getUser(email: String): User {
         return  withContext(Dispatchers.IO){
             Db.getDatabase(getApplication()).userDAO().getUserbyEmail(email)
-        }
-    }
-
-    fun filterExperiencesOpen(userId : Int) {
-        getExperiences { unFilteredList ->
-            unFilteredList.filter { experience ->
-                experience.dateFrom >= Calendar.getInstance().timeInMillis && (experience.fkUserIdOwner == userId || experience.fkUserIdRequester == userId)
-            }.sortedBy {
-                it.dateTo
-            }
-        }
-    }
-
-    fun filterExperiencesHistorical(userId : Int) {
-        getExperiences { unFilteredList ->
-            unFilteredList.filter { experience ->
-                experience.dateFrom < Calendar.getInstance().timeInMillis && (experience.fkUserIdOwner == userId || experience.fkUserIdRequester == userId)
-            }.sortedBy {
-                it.dateTo
-            }
         }
     }
 
@@ -62,5 +67,6 @@ class UserListExperienceFragmentViewModel(application: Application) : AndroidVie
         val sharedPreferences = getApplication<App>().getSharedPreferences("Preferencias", Context.MODE_PRIVATE)
         return sharedPreferences.getString(tag, "")
     }
+
 
 }

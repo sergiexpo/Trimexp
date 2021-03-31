@@ -1,5 +1,6 @@
-package com.neoland.trimexp.experiences.userlist
+package com.neoland.trimexp.experiences.manage
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,35 +11,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.neoland.trimexp.databinding.FragmentExperienceslistBinding
 import com.neoland.trimexp.databinding.FragmentExperiencesuserlistBinding
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.experiences.detail.ExperienceDetailActivity
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesAdapter
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesFragment
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesFragmentViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UserListExperiencesFragment : Fragment(),  UserListExperiencesAdapterInterface {
+class ManageExperienceFragment : Fragment(), ManageExperienceAdapterInterface {
 
     private lateinit var binding: FragmentExperiencesuserlistBinding
-    private lateinit var model : UserListExperienceFragmentViewModel
-    private lateinit var adapter: UserListExperienceAdapter
+    private lateinit var model : ManageExperienceFragmentViewModel
+    private lateinit var adapter: ManageExperienceAdapter
+   // private var userId : Int? = null
 
-    private var userId : Int? = null
-
-    enum class FilterExperiencesUserListTypes {
-        OPEN,
-        HISTORICAL,
-        WISH
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        model = ViewModelProvider(this).get(UserListExperienceFragmentViewModel::class.java)
+        model = ViewModelProvider(this).get(ManageExperienceFragmentViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,18 +42,20 @@ class UserListExperiencesFragment : Fragment(),  UserListExperiencesAdapterInter
         super.onViewCreated(view, savedInstanceState)
 
 
+
+
         lifecycleScope.launch(Dispatchers.Main) {
             model.loadPreferences("TAG_EMAIL")?.let{ email ->
                 if (email.isNotEmpty()) {
                     val user = model.getUser(email)
-                    userId = user.userId
-                    showExperiencesUserlist()
+                    val userId = user.userId
+                     showExperiencesUserlist(userId)
                 } else {
                     model.loadPreferences("TAG_EMAIL_TEMPORAL")?.let { email_temp ->
                         if (email_temp.isNotEmpty()) {
                             val user = model.getUser(email_temp)
-                            userId = user.userId
-                            showExperiencesUserlist()
+                            val userId = user.userId
+                            showExperiencesUserlist(userId)
                         } else {
                             Toast.makeText(binding.root.context, "Please, log in the app", Toast.LENGTH_LONG).show()
                             //Mejor finalizar el fragment y reedirigir
@@ -77,16 +70,13 @@ class UserListExperiencesFragment : Fragment(),  UserListExperiencesAdapterInter
 
     override fun onResume() {
         super.onResume()
-        getExperiencesUserList()
+        // getExperiencesUserList(userId)
     }
 
 
-    private fun createRecyclerView() {
+    private fun createRecyclerView(userId: Int) {
 
-        userId?.let {
-            adapter = UserListExperienceAdapter(this, it)
-        }
-
+        adapter = ManageExperienceAdapter(this, userId)
         binding.recyclerViewExperiencesListUser.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewExperiencesListUser.adapter = adapter
     }
@@ -101,32 +91,15 @@ class UserListExperiencesFragment : Fragment(),  UserListExperiencesAdapterInter
 
 
 
-    fun getExperiencesUserList(){
-        lifecycleScope.launchWhenResumed {
-            userId?.let{
-            model.filterExperiencesOpen(it)
-        }
-        }
+    fun getExperiencesUserList(userId: Int) {
+        model.getExperiencesOpen(userId)
     }
 
-    fun showExperiencesUserlist(){
-        getExperiencesUserList()
-        createRecyclerView()
+    fun showExperiencesUserlist(userId: Int) {
+        getExperiencesUserList(userId)
+        createRecyclerView(userId)
         observeModelExperiences()
     }
-
-
-
-    fun filterExperiences(filterType : FilterExperiencesUserListTypes){
-        lifecycleScope.launchWhenResumed {
-            when (filterType){
-                FilterExperiencesUserListTypes.OPEN -> userId?.let{model.filterExperiencesOpen(it)}
-                FilterExperiencesUserListTypes.HISTORICAL -> userId?.let{model.filterExperiencesHistorical(it)}
-          //    FilterExperiencesUserListTypes.WISH ->
-            }
-        }
-    }
-
 
 
 
@@ -146,5 +119,24 @@ class UserListExperiencesFragment : Fragment(),  UserListExperiencesAdapterInter
     override fun onItemClick(experience: Experience) {
         startExperienceDetailActivity(experience)
     }
+
+    override fun onLongItemClick(experience: Experience, userId: Int){
+
+        val builder = AlertDialog.Builder(binding.root.context)
+
+        builder.setMessage("User will be removed. Are you sure?")
+
+        builder.setPositiveButton("Yes"){ dialog, id ->
+            model.deleteExperience(experience, userId)
+
+        }
+        builder.setNegativeButton("Cancel"){ dialog, id ->
+        }
+        builder.create()
+        builder.show()
+    }
+
+
+
 
 }

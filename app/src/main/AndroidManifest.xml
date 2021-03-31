@@ -31,7 +31,8 @@
         <activity android:name=".users.register.RegisterUserActivity"/>
         <activity android:name=".experiences.register.RegisterExperienceActivity"/>
         <activity android:name=".experiences.userlist.UserListExperienceActivity"/>
-
+        <activity android:name=".experiences.manage.ManageExperienceActivity"/>
+        <activity android:name=".users.favourites.FavouriteUsersListActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

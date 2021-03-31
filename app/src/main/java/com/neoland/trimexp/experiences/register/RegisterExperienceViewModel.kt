@@ -1,8 +1,10 @@
 package com.neoland.trimexp.experiences.register
 
 import android.app.Application
+import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
+import com.neoland.trimexp.DDBB.App
 import com.neoland.trimexp.DDBB.Db
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.entities.User
@@ -22,6 +24,17 @@ class RegisterExperienceViewModel (application: Application) : AndroidViewModel(
                 experience.photoExperience = stream.toByteArray()
             }
             Db.getDatabase(getApplication()).experienceDao().insert(experience)
+        }
+    }
+
+    fun loadPreferences(tag: String) : String? {
+        val sharedPreferences = getApplication<App>().getSharedPreferences("Preferencias", Context.MODE_PRIVATE)
+        return sharedPreferences.getString(tag, "")
+    }
+
+    suspend fun getUser(email: String): User {
+        return  withContext(Dispatchers.IO){
+            Db.getDatabase(getApplication()).userDAO().getUserbyEmail(email)
         }
     }
 

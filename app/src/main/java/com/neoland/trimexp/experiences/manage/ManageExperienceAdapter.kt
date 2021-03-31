@@ -1,24 +1,23 @@
-package com.neoland.trimexp.experiences.userlist
+package com.neoland.trimexp.experiences.manage
 
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.neoland.trimexp.databinding.CardExperienceBinding
 import com.neoland.trimexp.databinding.CardExperienceUserListBinding
 import com.neoland.trimexp.entities.Experience
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesAdapter
-import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesAdapterInterface
 import java.text.DecimalFormat
 
 
-interface UserListExperiencesAdapterInterface{
+interface ManageExperienceAdapterInterface{
     fun onItemClick(experience: Experience)
+    fun onLongItemClick(experience: Experience, userId: Int)
 }
 
 
-class UserListExperienceAdapter(private val listener : UserListExperiencesAdapterInterface, private val userId: Int) : RecyclerView.Adapter<UserListExperienceAdapter.ExperienceViewHolder>()  {
+
+class ManageExperienceAdapter(private val listener : ManageExperienceAdapterInterface, private val userId: Int) : RecyclerView.Adapter<ManageExperienceAdapter.ExperienceViewHolder>()  {
 
     var experiences = listOf<Experience>()
     var lat = 0.0
@@ -28,9 +27,9 @@ class UserListExperienceAdapter(private val listener : UserListExperiencesAdapte
     class ExperienceViewHolder(val itemBinding: CardExperienceUserListBinding) : RecyclerView.ViewHolder(itemBinding.root)
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListExperienceAdapter.ExperienceViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExperienceViewHolder {
         val itemBinding = CardExperienceUserListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UserListExperienceAdapter.ExperienceViewHolder(itemBinding)
+        return ExperienceViewHolder(itemBinding)
     }
 
 
@@ -49,11 +48,16 @@ class UserListExperienceAdapter(private val listener : UserListExperiencesAdapte
         holder.itemBinding.textViewDurationUserOwner.text = experience.duration
         holder.itemBinding.textViewDateUserOwner.text = experience.dateFrom.toString() // Formatear correctamente
         holder.itemBinding.textViewPriceUserOwner.text = experience.price + " " + experience.currency
-        holder.itemBinding.linearLayoutCard.setBackgroundColor(Color.parseColor(colorTypeUser(experience)))
+        holder.itemBinding.textViewUserType.setBackgroundColor(Color.parseColor(colorTypeUser(experience)))
         holder.itemBinding.textViewUserType.text = textTypeUser(experience)
 
         holder.itemBinding.root.setOnClickListener {
             listener.onItemClick(experiences[position])
+        }
+
+        holder.itemBinding.root.setOnLongClickListener {
+            listener.onLongItemClick(experiences[position], userId)
+            true
         }
 
     }
@@ -69,6 +73,7 @@ class UserListExperienceAdapter(private val listener : UserListExperiencesAdapte
     }
 
 // MARK - Format Functions
+
 
     fun colorDistance(distance: Float) : String {
         if (distance < 1000F) {
@@ -97,6 +102,4 @@ class UserListExperienceAdapter(private val listener : UserListExperiencesAdapte
             return "Error"
         }
     }
-
-
 }

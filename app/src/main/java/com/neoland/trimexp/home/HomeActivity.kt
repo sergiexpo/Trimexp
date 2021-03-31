@@ -33,9 +33,11 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.material.snackbar.Snackbar
 import com.neoland.trimexp.BuildConfig
 import com.neoland.trimexp.R
+import com.neoland.trimexp.experiences.manage.ManageExperienceActivity
 import com.neoland.trimexp.experiences.register.RegisterExperienceActivity
 import com.neoland.trimexp.experiences.userlist.UserListExperienceActivity
 import com.neoland.trimexp.places.PlacesAdapter
+import com.neoland.trimexp.users.favourites.FavouriteUsersListActivity
 import com.neoland.trimexp.users.register.RegisterUserActivity
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -100,13 +102,6 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
         binding.imageViewLogAct.setImageResource(model.getLoginActivityImage())
 
 
-         // binding.navigationViewHome.addHeaderView(layoutInflater.inflate(R.layout.panel_lat_menu_home, binding.root, false))
-
- //   binding.navigationViewHome.getHeaderView(0).findViewById(R.id.imageView_photosample)
-
-
-
-
       binding.navigationViewHome.setNavigationItemSelectedListener { item ->
 
             when (item.itemId) {
@@ -116,6 +111,12 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
                 R.id.menuHome_listExperiencesUser ->{
                     startUserListExperienceActivity()
                 }
+                R.id.menuHome_manageExperiencesUser->{
+                    startManageExperienceActivity()
+                }
+                R.id.menuHome_favouritesUsers->{
+                    startFavouriteUsersListActivity()
+                }
                 else -> {
                     return@setNavigationItemSelectedListener false
                 }
@@ -124,7 +125,6 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
             binding.drawerLayout.closeDrawers()
             true
         }
-
 
 
 
@@ -312,16 +312,16 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
     }
 
     private fun getAddress(lat: Double, lng: Double): String {
-        // val geocoder = Geocoder(this)
         val list = geocoder.getFromLocation(lat, lng, 1)
-        return list[0].locality + ", " + list[0].postalCode + ", " + list[0].countryName
-
+        if (list.isEmpty()){
+            return "Address not found"
+        } else {
+            return list[0].locality + ", " + list[0].postalCode + ", " + list[0].countryName
+        }
     }
 
     private fun getLatitude(address: String) : Double?{
         val list = geocoder.getFromLocationName(address, 1)
-
-            Log.d("CARLOS", "${list[0].latitude}  and   ${list[0].longitude}" )
         if (list.isEmpty()){
             return null
         } else {
@@ -354,6 +354,16 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
 
     private fun startUserListExperienceActivity() {
         val intent = Intent(this, UserListExperienceActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun startManageExperienceActivity() {
+        val intent = Intent(this, ManageExperienceActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun startFavouriteUsersListActivity() {
+        val intent = Intent(this, FavouriteUsersListActivity::class.java)
         startActivity(intent)
     }
 

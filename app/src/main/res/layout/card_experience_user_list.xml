@@ -18,19 +18,24 @@
         app:cardCornerRadius="24dp">
 
         <LinearLayout
+            android:id="@+id/linearLayout_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="4dp"
+            android:background="@color/blue_1"
             android:gravity="center">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageView_photoExp_user_owner"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_gravity="center"
-                android:scaleType="centerCrop"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView_photoExp_user_owner"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,6 +43,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:orientation="vertical"
+                android:background="@color/white"
                 android:layout_weight="2">
 
                 <TextView
@@ -164,17 +170,15 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView_user_owner"
+                android:id="@+id/textView_user_type"
                 android:layout_width="72dp"
                 android:layout_height="match_parent"
-                android:background="@color/blue_1"
                 android:gravity="center"
                 android:text="Host"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:srcCompat="@android:drawable/btn_star_big_on">
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
 
             </TextView>
 
