@@ -212,7 +212,7 @@ tools:openDrawer="start" >
         android:background="@color/blue_1"
         android:fitsSystemWindows="true"
         app:itemBackground="@android:color/transparent"
-        app:headerLayout="@layout/panel_lat_menu_home"
+        app:headerLayout="@layout/viewheader_menu_home"
         app:menu="@menu/menu_home"/>
 
 

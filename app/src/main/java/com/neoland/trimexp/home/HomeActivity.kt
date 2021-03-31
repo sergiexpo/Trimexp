@@ -34,6 +34,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.neoland.trimexp.BuildConfig
 import com.neoland.trimexp.R
 import com.neoland.trimexp.experiences.register.RegisterExperienceActivity
+import com.neoland.trimexp.experiences.userlist.UserListExperienceActivity
 import com.neoland.trimexp.places.PlacesAdapter
 import com.neoland.trimexp.users.register.RegisterUserActivity
 import kotlinx.coroutines.launch
@@ -111,6 +112,9 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
             when (item.itemId) {
                 R.id.menuHome_addExperience -> {
                     startRegisterExperienceActivity()
+                }
+                R.id.menuHome_listExperiencesUser ->{
+                    startUserListExperienceActivity()
                 }
                 else -> {
                     return@setNavigationItemSelectedListener false
@@ -336,6 +340,8 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
     }
 
 
+    // MARK - Start Activities
+
     private fun startRegisterUserActivity() {
         val intent = Intent(this, RegisterUserActivity::class.java)
         startActivity(intent)
@@ -345,6 +351,14 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
         val intent = Intent(this, RegisterExperienceActivity::class.java)
         startActivity(intent)
     }
+
+    private fun startUserListExperienceActivity() {
+        val intent = Intent(this, UserListExperienceActivity::class.java)
+        startActivity(intent)
+    }
+
+
+    // MARK - Dialogs
 
     private fun showDialogLogIn() {
         val dialog = Dialog(this)

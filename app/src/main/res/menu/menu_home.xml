@@ -11,12 +11,21 @@
             android:title="Create Experience"/>
 
         <item
-            android:id="@+id/menu_2"
-            android:title="Opcion 2" />
+            android:id="@+id/menuHome_listExperiencesUser"
+            android:title="List experiences" />
+
 
         <item
-            android:id="@+id/menu_3"
-            android:title="Opcion 3" />
+            android:id="@+id/menuHome_manageExperiencesUser"
+            android:title="Manage experiences" />
+
+        <item
+            android:id="@+id/menuHome_Messages"
+            android:title="Messages" />
+
+        <item
+            android:id="@+id/menuHome_LogOut"
+            android:title="Log Out" />
 
     </group>
 
