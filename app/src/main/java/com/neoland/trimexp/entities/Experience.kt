@@ -24,9 +24,11 @@ data class Experience (var title: String,
                        var typeExperience: String? = null, // Host o Guest
                        var price: String,
                        var currency: String = " ",
+                       var paymentType: String? = null,
                        var fkUserIdRequester: Int?,
                        var dateFrom: Long, //Fecha única
                        var dateTo : Long?,
+                       var startHour : String? = null,
                        var isReserved: Boolean = false,
                        var fkUserIdOwner : Int? = null,
                        @ColumnInfo(typeAffinity = ColumnInfo.BLOB) var photoExperience: ByteArray? = null

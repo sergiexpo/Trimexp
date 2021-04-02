@@ -1,6 +1,7 @@
 package com.neoland.trimexp.experiences.detail
 
 import android.graphics.BitmapFactory
+import android.location.Geocoder
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,8 @@ import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Comp
 import com.neoland.trimexp.users.favourites.FavouriteUsersListFragmentViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
@@ -33,6 +36,7 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
     private lateinit var experience: Experience
     private var userId : Int? = null
     private var userFavoriteId : Int? = null
+    private lateinit var geocoder: Geocoder
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +46,8 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
 
         model = ViewModelProvider(this).get(ExperienceDetailViewModel::class.java)
         modelFavorite = ViewModelProvider(this).get(FavouriteUsersListFragmentViewModel::class.java)
+
+        geocoder = Geocoder(this)
 
         binding.imageViewIconBack.setOnClickListener {
             goBackExplorerActivity()
@@ -56,10 +62,13 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             experience.photoExperience?.let{binding.imageViewMainPhoto.setImageBitmap(BitmapFactory.decodeByteArray(it, 0 , it.size))}
             binding.textViewTitleDetailExp.text = experience.title
             binding.textViewDescriptionDetailExp.text = experience.description
-            binding.textViewDateDetailExp.text = experience.dateFrom.toString()
+            binding.textViewDateDetailExp.text = formatDate(Date(experience.dateFrom))
+            binding.textViewTimeDetailExp.text = experience.startHour
             binding.textViewDurationDetailExp.text = experience.duration
+            binding.textViewPaymentDetailExp.text = experience.paymentType
             binding.textViewPriceDetailExp .text = experience.price + " " + experience.currency
-            binding.textViewAdressDetailExp .text = experience.adress
+
+            binding.textViewAdressDetailExp .text = getAddress(experience.latitud, experience.longitud)
 
             val user =  model.getUser(intent.getIntExtra(TAG20, 0))
             userFavoriteId = user.userId
@@ -156,5 +165,22 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15F))
 
     }
+
+    private fun formatDate(date: Date): String {
+        var simpleDateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy")
+        return simpleDateFormat.format(date.time)
+
+    }
+
+    private fun getAddress(lat: Double, lng: Double): String {
+        val list = geocoder.getFromLocation(lat, lng, 1)
+        if (list.isEmpty()){
+            return "Address not found"
+        } else {
+            //return list[0].locality + ", " + list[0].postalCode + ", " + list[0].countryName
+            return list[0].getAddressLine(0)
+        }
+    }
+
 
 }

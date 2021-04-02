@@ -209,11 +209,10 @@ tools:openDrawer="start" >
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/blue_1"
         android:fitsSystemWindows="true"
-        app:itemBackground="@android:color/transparent"
         app:headerLayout="@layout/viewheader_menu_home"
-        app:menu="@menu/menu_home"/>
+        app:itemBackground="@android:color/transparent"
+        app:menu="@menu/menu_home" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

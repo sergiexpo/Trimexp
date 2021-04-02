@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -39,6 +40,7 @@ import com.neoland.trimexp.experiences.userlist.UserListExperienceActivity
 import com.neoland.trimexp.places.PlacesAdapter
 import com.neoland.trimexp.users.favourites.FavouriteUsersListActivity
 import com.neoland.trimexp.users.register.RegisterUserActivity
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,6 +53,7 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
     private var currentUserLat : Double? = null
     private var currentUserLong : Double? = null
     private var isUserLogged = false
+    private var isUserAlreadyLocated = false
     private lateinit var geocoder: Geocoder
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -85,7 +88,13 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
                 if (it.isNotEmpty()) {
                     val user = model.getUser(it)
                     binding.textViewTitle.text = "Welcome ${user.name}"
+                    user.mainPhoto?.let{binding.navigationViewHome.getHeaderView(0).findViewById<CircleImageView>(R.id.imageView_homeMenu_PhotoUser).setImageResource(it)}
+                    user.photoUser?.let{binding.navigationViewHome.getHeaderView(0).findViewById<CircleImageView>(R.id.imageView_homeMenu_PhotoUser).setImageBitmap(BitmapFactory.decodeByteArray(it, 0 , it.size))}
+                    binding.navigationViewHome.getHeaderView(0).findViewById<TextView>(R.id.textView_homeMenu_UserName).text = user.name
+                    binding.navigationViewHome.getHeaderView(0).findViewById<TextView>(R.id.textView_homeMenu_EmailName).text = user.email
                     isUserLogged = true
+
+
                     binding.imageViewIconMenu.setOnClickListener {
                         binding.drawerLayout.openDrawer(Gravity.LEFT)
                     }
@@ -93,7 +102,7 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
                 } else {
                     binding.textViewTitle.text = "Welcome Visitor"
                     binding.imageViewIconMenu.setOnClickListener {
-                        Toast.makeText(binding.root.context, "Please, log in the app", Toast.LENGTH_LONG).show()
+                        showDialogLogIn()
                     }
                 }
             }
@@ -101,10 +110,11 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
 
         binding.imageViewLogAct.setImageResource(model.getLoginActivityImage())
 
+        // val tvWelcome = binding.navigationViewRight.getHeaderView(0).findViewById<ImageView>(R.id.imageView_photosample)
 
-      //  val tvWelcome = binding.navigationViewRight.getHeaderView(0).findViewById<TextView>(R.id.tv_welcome)
 
-      binding.navigationViewHome.setNavigationItemSelectedListener { item ->
+
+        binding.navigationViewHome.setNavigationItemSelectedListener { item ->
 
             when (item.itemId) {
                 R.id.menuHome_addExperience -> {
@@ -119,6 +129,11 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
                 R.id.menuHome_favouritesUsers->{
                     startFavouriteUsersListActivity()
                 }
+
+                R.id.menuHome_LogOut->{
+                    showDialogLogOut()
+                }
+
                 else -> {
                     return@setNavigationItemSelectedListener false
                 }
@@ -216,7 +231,7 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
 
     private fun checkCurrentUserLocation() {
         if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             fusedLocationClient.lastLocation.addOnSuccessListener {
 
                 currentUserLat = it.latitude
@@ -226,6 +241,7 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
                     currentUserLong?.let { longitude ->
                         val address = getAddress(latitude,longitude)
                         binding.editTextLocation.setText(address)
+                        isUserAlreadyLocated = true
                     }
                 }
             }
@@ -242,41 +258,43 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(textNullable: Editable?) {
-            textNullable?.let { text ->
-                Log.d(HomeActivity::class.java.name, "El usuario ha escrito $text")
-                if (text.count() >= 3) {
-                    Log.d(HomeActivity::class.java.name, "Comenzamos a filtrar $text")
-                    if (!Places.isInitialized()) {
-                        Places.initialize(this@HomeActivity, BuildConfig.MAPS_API_KEY, Locale.getDefault())
+            if (isUserAlreadyLocated == true) {
+                textNullable?.let { text ->
+                    Log.d(HomeActivity::class.java.name, "El usuario ha escrito $text")
+                    if (text.count() >= 3) {
+                        Log.d(HomeActivity::class.java.name, "Comenzamos a filtrar $text")
+                        if (!Places.isInitialized()) {
+                            Places.initialize(this@HomeActivity, BuildConfig.MAPS_API_KEY, Locale.getDefault())
+                        }
+
+                        val placesClient = Places.createClient(this@HomeActivity)
+
+                        val request = FindAutocompletePredictionsRequest.builder()
+                                //      .setOrigin(location)
+                                //      .setCountries("ES")
+                                .setTypeFilter(TypeFilter.ADDRESS)
+                                .setSessionToken(token)
+                                .setQuery(text.toString())
+                                .build()
+
+                        placesClient.findAutocompletePredictions(request)
+                                .addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
+                                    val predictionsList = mutableListOf<String>()
+                                    Log.d(HomeActivity::class.java.name, "Se han recibido las siguientes sugerencias:")
+                                    for (prediction in response.autocompletePredictions) {
+                                        predictionsList.add(prediction.getFullText(null).toString())
+
+                                        Log.d(HomeActivity::class.java.name, "${prediction.getFullText(null)}")
+                                    }
+                                    autocompleteAdapter.updateData(predictionsList)
+                                }.addOnFailureListener { exception: Exception? ->
+                                    if (exception is ApiException) {
+                                        Snackbar.make(binding.root, "Se ha producido un error en la respuesta de Google", Snackbar.LENGTH_LONG).show()
+                                    }
+                                }
                     }
 
-                    val placesClient = Places.createClient(this@HomeActivity)
-
-                    val request = FindAutocompletePredictionsRequest.builder()
-                        //      .setOrigin(location)
-                        //      .setCountries("ES")
-                        .setTypeFilter(TypeFilter.ADDRESS)
-                        .setSessionToken(token)
-                        .setQuery(text.toString())
-                        .build()
-
-                    placesClient.findAutocompletePredictions(request)
-                        .addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
-                            val predictionsList = mutableListOf<String>()
-                            Log.d(HomeActivity::class.java.name, "Se han recibido las siguientes sugerencias:")
-                            for (prediction in response.autocompletePredictions) {
-                                predictionsList.add(prediction.getFullText(null).toString())
-
-                                Log.d(HomeActivity::class.java.name, "${prediction.getFullText(null)}")
-                            }
-                            autocompleteAdapter.updateData(predictionsList)
-                        }.addOnFailureListener { exception: Exception? ->
-                            if (exception is ApiException) {
-                                Snackbar.make(binding.root, "Se ha producido un error en la respuesta de Google", Snackbar.LENGTH_LONG).show()
-                            }
-                        }
                 }
-
             }
         }
     }
@@ -343,6 +361,11 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
 
 
     // MARK - Start Activities
+
+    private fun startHomeActivity() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+    }
 
     private fun startRegisterUserActivity() {
         val intent = Intent(this, RegisterUserActivity::class.java)
@@ -421,6 +444,11 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
 
                     val user = model.getUser(editTextEmail.text.toString())
                     binding.textViewTitle.text = "Welcome ${user.name}"
+                    user.mainPhoto?.let{binding.navigationViewHome.getHeaderView(0).findViewById<CircleImageView>(R.id.imageView_homeMenu_PhotoUser).setImageResource(it)}
+                    user.photoUser?.let{binding.navigationViewHome.getHeaderView(0).findViewById<CircleImageView>(R.id.imageView_homeMenu_PhotoUser).setImageBitmap(BitmapFactory.decodeByteArray(it, 0 , it.size))}
+                    binding.navigationViewHome.getHeaderView(0).findViewById<TextView>(R.id.textView_homeMenu_UserName).text = user.name
+                    binding.navigationViewHome.getHeaderView(0).findViewById<TextView>(R.id.textView_homeMenu_EmailName).text = user.email
+
                     isUserLogged = true
                     binding.imageViewIconMenu.setOnClickListener {
                         binding.drawerLayout.openDrawer(Gravity.LEFT)
@@ -435,6 +463,31 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
     }
 
 
+    private fun showDialogLogOut(){
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.options_menu_logout)
+
+
+        val buttonCancel = dialog.findViewById(R.id.button_logout_cancel) as Button
+        val buttonLogOut = dialog.findViewById(R.id.button_logout) as Button
+
+        buttonCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        buttonLogOut.setOnClickListener {
+            model.savePreferences("TAG_EMAIL", "")
+            model.savePreferences("TAG_PASS", "")
+            model.savePreferences("TAG_EMAIL_TEMPORAL", "")
+            model.savePreferences("TAG_PASS_TEMPORAL", "")
+            Toast.makeText(binding.root.context, "Succesfully log out", Toast.LENGTH_LONG).show()
+            finish()
+            startHomeActivity()
+
+        }
+        dialog.show()
+    }
 
 
 }

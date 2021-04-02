@@ -4,32 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <item android:title="Experiences">
+        <group android:checkableBehavior="single">
+            <menu>
+                <item
+                    android:id="@+id/menuHome_addExperience"
+                    android:icon="@mipmap/icon_add_new_experience"
+                    android:title="Create Experience" />
+                <item
+                    android:id="@+id/menuHome_listExperiencesUser"
+                    android:icon="@mipmap/icon_list_experiences"
+                    android:title="List experiences" />
+                <item
+                    android:id="@+id/menuHome_manageExperiencesUser"
+                    android:icon="@mipmap/icon_modify_experience"
+                    android:title="Manage experiences" />
+            </menu>
+        </group>
+    </item>
 
-        <item
-            android:id="@+id/menuHome_addExperience"
-            android:title="Create Experience"/>
+    <item android:title="Users">
+        <group android:checkableBehavior="single"
+            android:id="@+id/group_homeMenuUsers">
+            <menu>
+                <item
+                    android:id="@+id/menuHome_favouritesUsers"
+                    android:icon="@mipmap/icon_favorite_users"
+                    android:title="Favourite Users" />
+                <item
+                    android:id="@+id/menuHome_Messages"
+                    android:icon="@mipmap/icon_chat"
+                    android:title="Messages" />
+            </menu>
+        </group>
+    </item>
 
-        <item
-            android:id="@+id/menuHome_listExperiencesUser"
-            android:title="List experiences" />
+    <item android:title="Configuration">
+        <group android:checkableBehavior="single">
+            <menu>
+                <item
+                    android:id="@+id/menuHome_Preferences"
+                    android:icon="@mipmap/icon_gear"
+                    android:title="Preferences" />
+                <item
+                    android:id="@+id/menuHome_LogOut"
+                    android:icon="@mipmap/icon_logout"
+                    android:title="Log Out" />
+            </menu>
+        </group>
+    </item>
 
-        <item
-            android:id="@+id/menuHome_manageExperiencesUser"
-            android:title="Manage experiences" />
 
-        <item
-            android:id="@+id/menuHome_favouritesUsers"
-            android:title="Favourite Users" />
-
-        <item
-            android:id="@+id/menuHome_Messages"
-            android:title="Messages" />
-
-        <item
-            android:id="@+id/menuHome_LogOut"
-            android:title="Log Out" />
-
-    </group>
 
 </menu>

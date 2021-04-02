@@ -17,7 +17,7 @@ class RegisterExperienceViewModel (application: Application) : AndroidViewModel(
     suspend fun insertExperience(title: String, description: String, adress: String, duration: String, price: String, dateFrom: Long, dateTo: Long, owner: Int, bitmap: Bitmap?) {
         withContext(Dispatchers.IO) {
             val experience = Experience(title, null, description, null, adress, 40.4167, -3.70325, duration,
-                                        true, "host", price, "€", null, dateFrom, dateTo, false, owner)
+                                        true, "host", price, "€", null, null, dateFrom, dateTo, "10:00h",false, owner)
             bitmap?.let {
                 val stream = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
