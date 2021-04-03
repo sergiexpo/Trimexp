@@ -100,7 +100,7 @@ class ExplorerExperiencesFragmentViewModel(application: Application) : AndroidVi
                 } else {
                     false
                 } */
-                experience.dateFrom > date
+                experience.dateFrom > date && !experience.isReserved
             }
         }
     }

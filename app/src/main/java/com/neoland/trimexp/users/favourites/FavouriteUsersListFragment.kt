@@ -70,7 +70,7 @@ class FavouriteUsersListFragment : Fragment(), FavouriteUsersListAdapterInterfac
         binding.recyclerViewLisFavouriteUserr.adapter = adapter
     }
 
-    private fun observeModelExperiences(){
+    private fun observeModelUsers(){
         lifecycleScope.launch {
             model.usersFavorites.observe(viewLifecycleOwner) {
                 adapter.updateFavouriteUsers(it)
@@ -80,16 +80,26 @@ class FavouriteUsersListFragment : Fragment(), FavouriteUsersListAdapterInterfac
 
 
 
-    fun getExperiencesUserList(userId: Int) {
+
+    fun getUsersFavouriteList(userId: Int) {
         model.getUsersFavourites(userId)
     }
 
     fun showExperiencesUserlist(userId: Int) {
-        getExperiencesUserList(userId)
+        getUsersFavouriteList(userId)
         createRecyclerView(userId)
-        observeModelExperiences()
+        observeModelUsers()
     }
 
+    fun searchUsersInFavouriteList(text: String){
+        model.filterUsersInFavoriteList(text)
+    }
+
+    fun reloadFavouriteUsersList(){
+        userId?.let {
+            showExperiencesUserlist(it)
+        }
+    }
 
 
     override fun onItemClick(userFavorite: User) {

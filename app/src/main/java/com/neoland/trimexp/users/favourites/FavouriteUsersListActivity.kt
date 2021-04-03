@@ -1,6 +1,8 @@
 package com.neoland.trimexp.users.favourites
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.neoland.trimexp.databinding.ActivityUserListFavouriteusersBinding
@@ -16,12 +18,31 @@ class FavouriteUsersListActivity  : AppCompatActivity() {
         binding = ActivityUserListFavouriteusersBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initFragment(fragment)
+
         binding.imageViewIconBack.setOnClickListener {
             goBackManageExperienceActivity()
         }
 
+        binding.swSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                p0?.let {
+                    fragment.searchUsersInFavouriteList(p0)
+                }
+                return true
+            }
+            override fun onQueryTextChange(p0: String?): Boolean {
+                p0?.let {
+                    fragment.searchUsersInFavouriteList(p0)
+                }
+                return true
+            }
+        })
 
-        initFragment(fragment)
+        binding.imageViewIconReload.setOnClickListener {
+            fragment.reloadFavouriteUsersList()
+        }
+
 
 
     }

@@ -97,7 +97,7 @@ tools:openDrawer="start" >
                 android:id="@+id/imageView_location"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                app:srcCompat="@mipmap/icon_location"
+                app:srcCompat="@mipmap/icon_map"
                 app:tint="@color/white" />
 
             <EditText
@@ -108,7 +108,7 @@ tools:openDrawer="start" >
                 android:hint="Where? (Near to me)"
                 android:textColorHint="#FFFFFF"
                 android:textColor="#FFFFFF"
-                android:layout_marginStart="4dp" />
+                android:layout_marginStart="8dp" />
 
         </LinearLayout>
 
@@ -137,7 +137,7 @@ tools:openDrawer="start" >
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:textColor="#FFFFFF"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="8dp"
                 />
         </LinearLayout>
 
@@ -212,7 +212,8 @@ tools:openDrawer="start" >
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/viewheader_menu_home"
         app:itemBackground="@android:color/transparent"
-        app:menu="@menu/menu_home" />
+        app:menu="@menu/menu_home"
+        android:visibility="gone"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

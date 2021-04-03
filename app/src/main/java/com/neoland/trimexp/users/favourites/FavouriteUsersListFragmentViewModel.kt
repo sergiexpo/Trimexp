@@ -56,6 +56,11 @@ class FavouriteUsersListFragmentViewModel (application: Application) : AndroidVi
         }
     }
 
+    fun filterUsersInFavoriteList(text : String){
+
+        usersFavorites.value = usersFavorites.value?.filter { it.name.contains(text) || it.residentLocation.contains(text) }
+
+    }
 
 
     suspend fun getUser(email: String): User {
