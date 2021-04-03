@@ -34,7 +34,6 @@
         android:id="@+id/frameLayout_users_favourites"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#EFE9E9"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView_menuExperiencesType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

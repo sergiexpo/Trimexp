@@ -45,9 +45,11 @@ abstract class Db : RoomDatabase() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     CoroutineScope(Dispatchers.IO).launch {
 
-                        val users: List<User> = listOf(User("Laia", "Viajera callejera", "laia@gmail.com", "patata123", R.mipmap.user_sample_1 ),
-                                User("Goku", "Time traveller", "ron@gmail.com", "pikachu123", R.mipmap.user_sample2 ),
-                                User("Luffy", "Descubrir nuevos lugares", "colometa@gmail.com", "pomelo123", R.mipmap.user_sample3 ))
+                        val users: List<User> = listOf(User("Laia", "Barcelona", "Viajera callejera", "laia@gmail.com", "laia", R.mipmap.user_sample_1 ),
+                                User("Goku", "Berlin", "Time traveller", "goku@gmail.com", "goku", R.mipmap.user_sample2 ),
+                                User("Luffy", "Madrid", "Descubrir nuevos lugares", "luffy@gmail.com", "luffy", R.mipmap.user_sample3 ),
+                                User("Iñigo Montoya", "Barcelona", "Hola, me llamo Íñigo Montoya, tú mataste a mi padre, prepárate a morir", "montoya@gmail.com", "montoya", R.mipmap.user_sample4 ),
+                                User("Sr Orco", "Barcelona", "Matar humanos", "orco@gmail.com", "orco", R.mipmap.user_sample5 ))
 
                         INSTANCE?.userDAO()?.insertAll(users)
 
@@ -120,7 +122,9 @@ abstract class Db : RoomDatabase() {
                         INSTANCE?.experienceDao()?.insertAll(experiences)
 
                         val usersFavourites: List<UsersFavourites> = listOf(UsersFavourites(1,2),
-                                UsersFavourites(1,3)
+                                UsersFavourites(1,3),
+                                UsersFavourites(1,4),
+                                UsersFavourites(1,5)
                         )
 
                         INSTANCE?.UsersFavouritesDAO()?.insertAll(usersFavourites)

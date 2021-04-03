@@ -50,6 +50,7 @@ class RegisterUserActivity: AppCompatActivity() {
             lifecycleScope.launch{
                 model.insertUser(
                         binding.editTextRegisterUserNAme.text.toString(),
+                        binding.editTextLocationUser.text.toString(),
                         binding.editTextRegisterUserDescription.text.toString(),
                         binding.editTextRegisterUserEmail.text.toString(),
                         binding.editTextRegisterUserPassword.text.toString(),

@@ -79,6 +79,27 @@
                 android:textSize="16dp" />
 
             <TextView
+                android:id="@+id/textView_locationUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Resident location"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editText_locationUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="City"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textSize="16dp" />
+
+            <TextView
                 android:id="@+id/textView_registerUserEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

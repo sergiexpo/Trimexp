@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class User (var name: String,
+                 var residentLocation: String,
                  var description: String,
                  var email: String,
                  var password: String,

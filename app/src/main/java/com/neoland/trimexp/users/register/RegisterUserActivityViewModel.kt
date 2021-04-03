@@ -11,9 +11,9 @@ import java.io.ByteArrayOutputStream
 
 class RegisterUserActivityViewModel (application: Application) : AndroidViewModel(application)  {
 
-    suspend fun insertUser(name: String, description: String, email: String, password: String, bitmap: Bitmap?) {
+    suspend fun insertUser(name: String, residentLocation: String, description: String, email: String, password: String, bitmap: Bitmap?) {
         withContext(Dispatchers.IO) {
-            val user = User(name, description, email, password)
+            val user = User(name, residentLocation, description, email, password)
             bitmap?.let {
                 val stream = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
