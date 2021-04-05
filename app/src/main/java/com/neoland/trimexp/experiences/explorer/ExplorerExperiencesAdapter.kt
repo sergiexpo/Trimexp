@@ -40,6 +40,7 @@ class ExplorerExperiencesAdapter(val listener : ExplorerExperiencesAdapterInterf
         holder.itemBinding.imageViewLocation.setColorFilter(Color.parseColor(colorDistance(distance)))
         holder.itemBinding.textViewLocation.text = formatDistance.format(distance).toString() + " m"
         holder.itemBinding.textViewDuration.text = experience.duration
+        holder.itemBinding.ratingBarCardExperience.rating = experience.ratingValoration
         holder.itemBinding.textViewPrice.text = experience.price + " " + experience.currency
 
 

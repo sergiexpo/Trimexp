@@ -12,6 +12,7 @@ data class User (var name: String,
                  var email: String,
                  var password: String,
                  var mainPhoto: Int? = null,
+                 var ratingValoration: Float = 0F,
                  @ColumnInfo(typeAffinity = ColumnInfo.BLOB) var photoUser: ByteArray? = null
 
 ) {

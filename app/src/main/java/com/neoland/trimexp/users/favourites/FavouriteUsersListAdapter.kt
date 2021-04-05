@@ -37,10 +37,11 @@ class FavouriteUsersListAdapter(private val listener : FavouriteUsersListAdapter
 
         var user = users[position]
 
-       user.photoUser?.let{holder.itemBinding.imageViewPhotoUserFav.setImageBitmap(BitmapFactory.decodeByteArray(it, 0 , it.size))}
+        user.photoUser?.let{holder.itemBinding.imageViewPhotoUserFav.setImageBitmap(BitmapFactory.decodeByteArray(it, 0 , it.size))}
         user.mainPhoto?.let{holder.itemBinding.imageViewPhotoUserFav.setImageResource(it)}
-       holder.itemBinding.textViewNameUserFav.text = user.name
+        holder.itemBinding.textViewNameUserFav.text = user.name
         holder.itemBinding.textViewLocationUserFav.text = user.residentLocation
+        holder.itemBinding.ratingBarUser.rating = user.ratingValoration
 
         holder.itemBinding.root.setOnClickListener {
             listener.onItemClick(users[position])

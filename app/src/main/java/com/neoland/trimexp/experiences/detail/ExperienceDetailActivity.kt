@@ -67,7 +67,8 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             binding.textViewDurationDetailExp.text = experience.duration
             binding.textViewPaymentDetailExp.text = experience.paymentType
             binding.textViewPriceDetailExp .text = experience.price + " " + experience.currency
-
+            
+            binding.ratingBarExp.rating = experience.ratingValoration
             binding.textViewAdressDetailExp .text = getAddress(experience.latitud, experience.longitud)
 
             val user =  model.getUser(intent.getIntExtra(TAG20, 0))
@@ -75,6 +76,7 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             binding.textViewUserName.text = user.name
             user.mainPhoto?.let{ binding.imageViewPhotoUser.setImageResource(it)}
             user.photoUser?.let{binding.imageViewPhotoUser.setImageBitmap(BitmapFactory.decodeByteArray(it, 0 , it.size))}
+            binding.ratingBarUser.rating = user.ratingValoration
 
             val mapFragment = supportFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment
             mapFragment.getMapAsync(this@ExperienceDetailActivity)

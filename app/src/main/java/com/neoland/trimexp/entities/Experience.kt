@@ -31,6 +31,7 @@ data class Experience (var title: String,
                        var startHour : String? = null,
                        var isReserved: Boolean = false,
                        var fkUserIdOwner : Int? = null,
+                       var ratingValoration: Float = 0F,
                        @ColumnInfo(typeAffinity = ColumnInfo.BLOB) var photoExperience: ByteArray? = null
 
 ) {

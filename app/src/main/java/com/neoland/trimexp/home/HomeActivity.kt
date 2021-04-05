@@ -146,7 +146,6 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
 
 
         binding.editTextDates.keyListener = null
-        binding.editTextSignIn.keyListener = null
         binding.editTextLogIn.keyListener = null
 
         checkCurrentUserLocation()
@@ -191,13 +190,15 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
         }
 
 
-        binding.buttonExplore.setOnClickListener {
+        binding.imageViewButtonExplore.setOnClickListener {
             startExplorerExperienceActivity()
         }
 
-        binding.editTextSignIn.setOnClickListener {
-            startRegisterUserActivity()
+        binding.textViewButtontext.setOnClickListener {
+            startExplorerExperienceActivity()
         }
+
+
 
         binding.editTextLogIn.setOnClickListener {
             showDialogLogIn()
@@ -405,8 +406,9 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
         val editTextEmail = dialog.findViewById(R.id.editText_email) as EditText
         val editTextPassword = dialog.findViewById(R.id.editText_Password) as EditText
         val checkBox = dialog.findViewById(R.id.checkBox_rememberUser) as CheckBox
-        val buttonCancel = dialog.findViewById(R.id.button_cancel) as Button
+        val buttonSignIn = dialog.findViewById(R.id.button_signIn) as Button
         val buttonLogIn = dialog.findViewById(R.id.button_logIn) as Button
+        val buttonCancel = dialog.findViewById(R.id.imageView_iconCancel) as ImageView
 
 
         model.loadPreferences("TAG_EMAIL")?.let {
@@ -422,6 +424,10 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
 
         buttonCancel.setOnClickListener {
             dialog.dismiss()
+        }
+
+        buttonSignIn.setOnClickListener {
+            startRegisterUserActivity()
         }
 
         buttonLogIn.setOnClickListener {

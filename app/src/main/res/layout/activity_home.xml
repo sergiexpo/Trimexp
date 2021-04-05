@@ -142,39 +142,30 @@ tools:openDrawer="start" >
         </LinearLayout>
 
 
-        <Button
-            android:id="@+id/button_explore"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="12dp"
-            android:backgroundTint="#EC8800"
-            android:text="Explore"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout_dates"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout_userOptions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+        <ImageView
+            android:id="@+id/imageView_button_explore"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_explore">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_dates"
+            app:srcCompat="@mipmap/icon_explore"
+            app:tint="@color/white"/>
 
-        <EditText
-            android:id="@+id/editText_signIn"
+        <TextView
+            android:id="@+id/textView_buttontext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="none"
+            android:layout_marginTop="8dp"
+            android:text="Discover"
             android:textColor="#FFFFFF"
-            android:gravity="center"
-            android:text="Sign In"
-            android:textSize="14dp"
-            android:layout_weight="1"
-             />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_button_explore" />
+
 
 
             <EditText
@@ -183,12 +174,16 @@ tools:openDrawer="start" >
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:textColor="#FFFFFF"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="Log In"
+                android:text="Register or Login"
                 android:textSize="14dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_buttontext" />
 
-       </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_places_suggestions"
@@ -212,8 +207,7 @@ tools:openDrawer="start" >
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/viewheader_menu_home"
         app:itemBackground="@android:color/transparent"
-        app:menu="@menu/menu_home"
-        android:visibility="gone"/>
+        app:menu="@menu/menu_home"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

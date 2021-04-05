@@ -14,11 +14,11 @@
                 <item
                     android:id="@+id/menuHome_listExperiencesUser"
                     android:icon="@mipmap/icon_list_experiences"
-                    android:title="List experiences" />
+                    android:title="My experiences list" />
                 <item
                     android:id="@+id/menuHome_manageExperiencesUser"
                     android:icon="@mipmap/icon_modify_experience"
-                    android:title="Manage experiences" />
+                    android:title="Update experiences" />
             </menu>
         </group>
     </item>
