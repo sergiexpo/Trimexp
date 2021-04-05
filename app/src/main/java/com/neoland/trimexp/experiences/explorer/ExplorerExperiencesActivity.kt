@@ -115,6 +115,8 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
       //  body.text = title
         val sortButtonAscName = dialog.findViewById(R.id.option_sort_AscendingName) as RadioButton
         val sortButtonDescName = dialog.findViewById(R.id.option_sort_DescendingName) as RadioButton
+        val sortButtonDistance = dialog.findViewById(R.id.option_sort_Distance) as RadioButton
+        val sortButtonDuration = dialog.findViewById(R.id.option_sort_Duration) as RadioButton
 
         sortButtonAscName.setOnClickListener {
             dialog.dismiss()
@@ -123,6 +125,15 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         sortButtonDescName.setOnClickListener {
             dialog.dismiss()
             fragmentList.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_NAME_DESCENDING)
+        }
+        sortButtonDistance.setOnClickListener {
+            dialog.dismiss()
+            fragmentList.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_DISTANCE)
+
+        }
+        sortButtonDuration.setOnClickListener {
+            dialog.dismiss()
+            fragmentList.sortExperiences(ExplorerExperiencesFragment.SortTypes.BY_DURATION)
         }
         dialog.show()
     }

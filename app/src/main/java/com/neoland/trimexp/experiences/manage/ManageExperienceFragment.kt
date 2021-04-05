@@ -15,6 +15,7 @@ import com.neoland.trimexp.databinding.FragmentExperiencesuserlistBinding
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.experiences.detail.ExperienceDetailActivity
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity
+import com.neoland.trimexp.experiences.userlist.UserListExperienceAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -76,7 +77,11 @@ class ManageExperienceFragment : Fragment(), ManageExperienceAdapterInterface {
 
     private fun createRecyclerView(userId: Int) {
 
-        adapter = ManageExperienceAdapter(this, userId)
+        userId?.let { id ->
+            getContext()?.let { context ->
+                adapter = ManageExperienceAdapter(this, id, context)
+            }
+        }
         binding.recyclerViewExperiencesListUser.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recyclerViewExperiencesListUser.adapter = adapter
     }
@@ -124,17 +129,39 @@ class ManageExperienceFragment : Fragment(), ManageExperienceAdapterInterface {
 
         val builder = AlertDialog.Builder(binding.root.context)
 
-        builder.setMessage("Experience will be removed. Are you sure?")
+        if (experience.fkUserIdOwner == userId) {
 
-        builder.setPositiveButton("Yes"){ dialog, id ->
-            model.deleteExperience(experience, userId)
+            builder.setMessage("Experience will be removed. Are you sure?")
+
+            builder.setPositiveButton("Yes") { dialog, id ->
+                model.deleteExperience(experience, userId)
+
+            }
+            builder.setNegativeButton("Cancel") { dialog, id ->
+            }
+            builder.create()
+            builder.show()
+
+        } else if (experience.fkUserIdRequester == userId) {
+
+            builder.setMessage("You are going to unbook the experience . Are you sure?")
+
+            builder.setPositiveButton("Yes") { dialog, id ->
+                lifecycleScope.launch(Dispatchers.Main) {
+                    model.unbookExperience(experience, userId)
+                }
+
+            }
+            builder.setNegativeButton("Cancel") { dialog, id ->
+            }
+            builder.create()
+            builder.show()
+
 
         }
-        builder.setNegativeButton("Cancel"){ dialog, id ->
-        }
-        builder.create()
-        builder.show()
+
     }
+
 
 
 

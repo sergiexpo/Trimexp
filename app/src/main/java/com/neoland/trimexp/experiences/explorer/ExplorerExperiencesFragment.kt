@@ -33,7 +33,7 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
         BY_NAME_ASCENDING,
         BY_NAME_DESCENDING,
         BY_DISTANCE,
-        BY_DATES
+        BY_DURATION
     }
 
     enum class FilterTypes {
@@ -93,6 +93,8 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
             when (sortType) {
                 SortTypes.BY_NAME_ASCENDING -> model.sortExperiencesByAscendingName()
                 SortTypes.BY_NAME_DESCENDING -> model.sortExperiencesByDescendingName()
+                SortTypes.BY_DISTANCE -> model.sortExperiencesByDistance(lat, long)
+                SortTypes.BY_DURATION -> model. sortExperiencesByDuration()
 
             }
         }

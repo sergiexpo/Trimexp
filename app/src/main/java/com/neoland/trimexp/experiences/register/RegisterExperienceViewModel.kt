@@ -14,7 +14,7 @@ import java.io.ByteArrayOutputStream
 
 class RegisterExperienceViewModel (application: Application) : AndroidViewModel(application)  {
 
-    suspend fun insertExperience(title: String, description: String, adress: String, duration: String, price: String, dateFrom: Long, dateTo: Long, owner: Int, bitmap: Bitmap?) {
+    suspend fun insertExperience(title: String, description: String, adress: String, duration: Float, price: Float, dateFrom: Long, dateTo: Long, owner: Int, bitmap: Bitmap?) {
         withContext(Dispatchers.IO) {
             val experience = Experience(title, null, description, null, adress, 40.4167, -3.70325, duration,
                                         true, "host", price, "€", null, null, dateFrom, dateTo, "10:00h",false, owner)

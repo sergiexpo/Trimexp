@@ -87,6 +87,28 @@ class ExplorerExperiencesFragmentViewModel(application: Application) : AndroidVi
     }
 
 
+    fun sortExperiencesByDistance(lat: Double, long: Double) {
+
+        var currentLocation = Location("Current")
+        currentLocation.latitude = lat
+        currentLocation.longitude = long
+
+        var experienceLocation = Location("Experience")
+
+        experiences.value = experiences.value?.sortedBy {
+            experienceLocation.latitude = it.latitud
+            experienceLocation.longitude = it.longitud
+            currentLocation.distanceTo(experienceLocation)
+        }
+    }
+
+    fun sortExperiencesByDuration() {
+
+        experiences.value = experiences.value?.sortedBy { experience ->
+            experience.duration }
+    }
+
+
 
 
     //////// Filter FUNCTIONS ////////
@@ -117,7 +139,7 @@ class ExplorerExperiencesFragmentViewModel(application: Application) : AndroidVi
             }
         }*/
         experiences.value = experiences.value?.filter { experience ->
-            experience.price == "Free"}
+            experience.price == 0F}
     }
 
 

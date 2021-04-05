@@ -83,8 +83,10 @@ class UserListExperiencesFragment : Fragment(),  UserListExperiencesAdapterInter
 
     private fun createRecyclerView() {
 
-        userId?.let {
-            adapter = UserListExperienceAdapter(this, it)
+        userId?.let { id ->
+            getContext()?.let { context ->
+                adapter = UserListExperienceAdapter(this, id, context)
+            }
         }
 
         binding.recyclerViewExperiencesListUser.layoutManager = LinearLayoutManager(binding.root.context)

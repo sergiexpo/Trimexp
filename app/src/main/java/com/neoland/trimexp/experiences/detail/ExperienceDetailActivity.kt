@@ -24,8 +24,10 @@ import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Comp
 import com.neoland.trimexp.users.favourites.FavouriteUsersListFragmentViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.absoluteValue
 
 
 class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
@@ -64,9 +66,9 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             binding.textViewDescriptionDetailExp.text = experience.description
             binding.textViewDateDetailExp.text = formatDate(Date(experience.dateFrom))
             binding.textViewTimeDetailExp.text = experience.startHour
-            binding.textViewDurationDetailExp.text = experience.duration
-            binding.textViewPaymentDetailExp.text = experience.paymentType
-            binding.textViewPriceDetailExp .text = experience.price + " " + experience.currency
+            binding.textViewDurationDetailExp.text = experience.duration.toString() + " hours"
+            binding.textViewPaymentDetailExp.text =formatPaymentMethods(experience.price, experience.paymentType)
+            binding.textViewPriceDetailExp .text = formatIsFree(experience.price,experience.currency)
             
             binding.ratingBarExp.rating = experience.ratingValoration
             binding.textViewAdressDetailExp .text = getAddress(experience.latitud, experience.longitud)
@@ -182,6 +184,32 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             //return list[0].locality + ", " + list[0].postalCode + ", " + list[0].countryName
             return list[0].getAddressLine(0)
         }
+    }
+
+    // MARK - Format Functions Price
+
+    fun formatIsFree(price: Float, currency: String) : String{
+
+        var formatDistanceM = DecimalFormat("#")
+
+        if (price == 0F) {
+            return "Free"
+        } else {
+            if (price.absoluteValue % 1.0 >= 0.005) {
+                return price.toString() + "$currency"
+            } else {
+                return formatDistanceM.format(price).toString() + "$currency"
+            }
+        }
+    }
+
+    fun formatPaymentMethods(price: Float, paymentType: String?) : String?{
+        if(price == 0F){
+            return "No payment methods available due to experience is Free"
+        } else {
+            return paymentType
+        }
+
     }
 
 

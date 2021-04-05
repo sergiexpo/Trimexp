@@ -42,7 +42,7 @@ class UserListExperienceFragmentViewModel(application: Application) : AndroidVie
             unFilteredList.filter { experience ->
                 experience.dateFrom >= Calendar.getInstance().timeInMillis && (experience.fkUserIdOwner == userId || experience.fkUserIdRequester == userId)
             }.sortedBy {
-                it.dateTo
+                it.dateFrom
             }
         }
     }
@@ -52,7 +52,7 @@ class UserListExperienceFragmentViewModel(application: Application) : AndroidVie
             unFilteredList.filter { experience ->
                 experience.dateFrom < Calendar.getInstance().timeInMillis && (experience.fkUserIdOwner == userId || experience.fkUserIdRequester == userId)
             }.sortedBy {
-                it.dateTo
+                it.dateFrom
             }
         }
     }

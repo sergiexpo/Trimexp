@@ -9,6 +9,12 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+    <RadioButton
+        android:id="@+id/option_sort_Distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:text="Distance (near to me)" />
 
     <RadioButton
         android:id="@+id/option_sort_AscendingName"
@@ -23,6 +29,15 @@
         android:layout_height="wrap_content"
         android:layoutDirection="rtl"
         android:text="Descending title" />
+
+
+    <RadioButton
+        android:id="@+id/option_sort_Duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:text="Duration" />
+
 
 
 </LinearLayout>

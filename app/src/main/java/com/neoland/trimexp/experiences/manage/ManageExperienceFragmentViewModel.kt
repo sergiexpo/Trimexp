@@ -33,9 +33,9 @@ class ManageExperienceFragmentViewModel (application: Application) : AndroidView
     fun getExperiencesOpen(userId : Int) {
         getExperiences { unFilteredList ->
             unFilteredList.filter { experience ->
-                experience.dateFrom >= Calendar.getInstance().timeInMillis && experience.fkUserIdOwner == userId
+                experience.dateFrom >= Calendar.getInstance().timeInMillis && (experience.fkUserIdOwner == userId || experience.fkUserIdRequester == userId)
             }.sortedBy {
-                it.dateTo
+                it.dateFrom
             }
         }
     }
@@ -66,6 +66,15 @@ class ManageExperienceFragmentViewModel (application: Application) : AndroidView
     fun loadPreferences(tag: String) : String? {
         val sharedPreferences = getApplication<App>().getSharedPreferences("Preferencias", Context.MODE_PRIVATE)
         return sharedPreferences.getString(tag, "")
+    }
+
+  suspend fun unbookExperience(experience: Experience, userId: Int) {
+        withContext(Dispatchers.IO) {
+            experience.isReserved = false
+            experience.fkUserIdRequester = null
+            Db.getDatabase(getApplication()).experienceDao().update(experience)
+            getExperiencesOpen(userId)
+        }
     }
 
 

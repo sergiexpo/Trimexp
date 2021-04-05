@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/blue_1"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,7 +27,6 @@
             android:src="@drawable/abc_vector_test"
             app:tint="@color/white"
             />
-
 
     </LinearLayout>
 

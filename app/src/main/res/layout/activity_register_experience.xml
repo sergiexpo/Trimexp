@@ -147,7 +147,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:hint="Hours"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:padding="12dp"
                 android:textSize="16dp" />
 
@@ -170,7 +170,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:hint="Price"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="12dp"
                 android:textSize="16dp" />
 
