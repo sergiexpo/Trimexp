@@ -53,106 +53,146 @@
             android:id="@+id/linearLayout_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="12dp">
 
-
-
-            <TextView
-                android:id="@+id/textView_registerUserName"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="Public name"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                android:background="@color/blue_1">
 
-            <EditText
-                android:id="@+id/editText_registerUserNAme"
+                <ImageView
+                    android:id="@+id/imageView_registerUserName"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    app:srcCompat="@mipmap/icon_user_register"
+                    app:tint="@color/white" />
+
+                <EditText
+                    android:id="@+id/editText_registerUserNAme"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#EFEAEA"
+                    android:hint="User Name"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textSize="18dp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="Name"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textSize="16dp" />
-
-            <TextView
-                android:id="@+id/textView_locationUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="Resident location"
-                android:textSize="16dp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/editText_locationUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="City"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textSize="16dp" />
-
-            <TextView
-                android:id="@+id/textView_registerUserEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:gravity="center"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
-                android:text="Email contact and Loggin"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                android:background="@color/blue_1">
+
+                <ImageView
+                    android:id="@+id/imageView_registerLocationUser"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    app:srcCompat="@mipmap/icon_home"
+                    app:tint="@color/white" />
+
+                <EditText
+                    android:id="@+id/editText_locationUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#EFEAEA"
+                    android:hint="Home City"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textSize="16dp" />
+            </LinearLayout>
 
 
-            <EditText
-                android:id="@+id/editText_registerUserEmail"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:padding="12dp"
-                android:textSize="16dp" />
-
-            <TextView
-                android:id="@+id/textView_registerUserPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:gravity="center"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
-                android:text="Your password"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                android:background="@color/blue_1">
+
+                <ImageView
+                    android:id="@+id/imageView_registerEmailUser"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    app:srcCompat="@mipmap/icon_email"
+                    app:tint="@color/white" />
+
+                <EditText
+                    android:id="@+id/editText_registerUserEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#EFEAEA"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:padding="12dp"
+                    android:textSize="16dp" />
+            </LinearLayout>
 
 
-            <EditText
-                android:id="@+id/editText_registerUserPassword"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="12dp"
-                android:textSize="16dp" />
+                android:gravity="center"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                android:background="@color/blue_1">
+
+                <ImageView
+                    android:id="@+id/imageView_registerPasswordUser"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    app:srcCompat="@mipmap/icon_lock"
+                    app:tint="@color/white" />
+
+                <EditText
+                    android:id="@+id/editText_registerUserPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#EFEAEA"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/textView_registerDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="Tell something about you"
+                android:background="@color/blue_1"
+                android:textColor="@color/white"
+                android:padding="8dp"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
@@ -161,49 +201,59 @@
                 android:id="@+id/editText_registerUserDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="Description"
-                android:inputType="text"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="#EFEAEA"
+                android:hint="Enter a brief description about you (hobbies, preferences, ...)  "
+                android:inputType="textMultiLine"
                 android:padding="12dp"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                />
 
             <TextView
                 android:id="@+id/textView_registerUserPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="Choose a photo"
+                android:background="@color/blue_1"
+                android:textColor="@color/white"
+                android:padding="8dp"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="#EFEAEA">
 
                 <ImageView
                     android:id="@+id/imageView_registerUserPhoto"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:scaleType="centerCrop"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginStart="16dp"
-                    app:layout_constraintBottom_toTopOf="@+id/button_addUser"
+                    android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/user_sample2"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@mipmap/register_user" />
 
 
                 <Button
                     android:id="@+id/button_explorer"
-                    android:layout_width="140dp"
+                    android:layout_width="112dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:backgroundTint="@color/blue_1"
                     android:text="Explorer"
+                    android:textSize="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/imageView_registerUserPhoto"
@@ -211,30 +261,33 @@
 
                 <Button
                     android:id="@+id/button_camera"
-                    android:layout_width="140dp"
+                    android:layout_width="112dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:backgroundTint="@color/blue_1"
                     android:text="Camera"
+                    android:textSize="12dp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView_registerUserPhoto"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/imageView_registerUserPhoto"
                     app:layout_constraintTop_toBottomOf="@+id/button_explorer"
-                    app:layout_constraintVertical_bias="0.269" />
-
-                <Button
-                    android:id="@+id/button_addUser"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:backgroundTint="@color/orange_1"
-                    android:text="Add User"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintVertical_bias="0.096" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/button_addUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="48dp"
+                android:backgroundTint="@color/orange_1"
+                android:text="Add User"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </LinearLayout>
 

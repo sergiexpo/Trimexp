@@ -40,6 +40,12 @@ class ManageExperienceFragmentViewModel (application: Application) : AndroidView
         }
     }
 
+    fun searchExperiencesInManagerList(text : String){
+
+        experiences.value = experiences.value?.filter { it.title.contains(text)}
+
+    }
+
     fun deleteExperience(experience: Experience, userId: Int){
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -54,7 +60,6 @@ class ManageExperienceFragmentViewModel (application: Application) : AndroidView
         }
 
     }
-
 
     suspend fun getUser(email: String): User {
         return  withContext(Dispatchers.IO){

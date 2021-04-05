@@ -24,7 +24,7 @@ class ManageExperienceFragment : Fragment(), ManageExperienceAdapterInterface {
     private lateinit var binding: FragmentExperiencesuserlistBinding
     private lateinit var model : ManageExperienceFragmentViewModel
     private lateinit var adapter: ManageExperienceAdapter
-   // private var userId : Int? = null
+    private var userId : Int? = null
 
 
 
@@ -49,14 +49,14 @@ class ManageExperienceFragment : Fragment(), ManageExperienceAdapterInterface {
             model.loadPreferences("TAG_EMAIL")?.let{ email ->
                 if (email.isNotEmpty()) {
                     val user = model.getUser(email)
-                    val userId = user.userId
-                     showExperiencesUserlist(userId)
+                    userId = user.userId
+                     userId?.let{showExperiencesUserlist(it)}
                 } else {
                     model.loadPreferences("TAG_EMAIL_TEMPORAL")?.let { email_temp ->
                         if (email_temp.isNotEmpty()) {
                             val user = model.getUser(email_temp)
-                            val userId = user.userId
-                            showExperiencesUserlist(userId)
+                            userId = user.userId
+                            userId?.let{showExperiencesUserlist(it)}
                         } else {
                             Toast.makeText(binding.root.context, "Please, log in the app", Toast.LENGTH_LONG).show()
                             //Mejor finalizar el fragment y reedirigir
@@ -120,6 +120,18 @@ class ManageExperienceFragment : Fragment(), ManageExperienceAdapterInterface {
         }
 
     }
+
+
+    fun searchExperiencesInManagerList(text: String){
+        model.searchExperiencesInManagerList(text)
+    }
+
+    fun reloadExperiencesInManagerList(){
+        userId?.let {
+            showExperiencesUserlist(it)
+        }
+    }
+
 
     override fun onItemClick(experience: Experience) {
         startExperienceDetailActivity(experience)

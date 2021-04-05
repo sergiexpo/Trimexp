@@ -141,6 +141,7 @@ class RegisterExperienceActivity : AppCompatActivity(), PlacesAdapter.OnItemClic
                             getLocality(expLat, expLong),
                             binding.editTextRegisterExpDuration.text.toString().toFloat(),
                             binding.editTextRegisterExpPrice.text.toString().toFloat(),
+                            binding.editTextCurrency.text.toString(),
                             dateFrom,
                             dateTo,
                             it,

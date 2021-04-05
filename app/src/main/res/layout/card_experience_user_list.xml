@@ -23,6 +23,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             android:background="@color/blue_1">
 
 

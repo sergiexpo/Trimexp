@@ -43,13 +43,13 @@ class FavouriteUsersListFragment : Fragment(), FavouriteUsersListAdapterInterfac
                 if (email.isNotEmpty()) {
                     val user = model.getUser(email)
                     userId = user.userId
-                    userId?.let{showExperiencesUserlist(it)}
+                    userId?.let{showsUserFavouritelist(it)}
                 } else {
                     model.loadPreferences("TAG_EMAIL_TEMPORAL")?.let { email_temp ->
                         if (email_temp.isNotEmpty()) {
                             val user = model.getUser(email_temp)
                              userId = user.userId
-                            userId?.let{showExperiencesUserlist(it)}
+                            userId?.let{showsUserFavouritelist(it)}
                         } else {
                             Toast.makeText(binding.root.context, "Please, log in the app", Toast.LENGTH_LONG).show()
                             //Mejor finalizar el fragment y reedirigir
@@ -85,19 +85,19 @@ class FavouriteUsersListFragment : Fragment(), FavouriteUsersListAdapterInterfac
         model.getUsersFavourites(userId)
     }
 
-    fun showExperiencesUserlist(userId: Int) {
+    fun showsUserFavouritelist(userId: Int) {
         getUsersFavouriteList(userId)
         createRecyclerView(userId)
         observeModelUsers()
     }
 
     fun searchUsersInFavouriteList(text: String){
-        model.filterUsersInFavoriteList(text)
+        model.searchUsersInFavoriteList(text)
     }
 
     fun reloadFavouriteUsersList(){
         userId?.let {
-            showExperiencesUserlist(it)
+            showsUserFavouritelist(it)
         }
     }
 
