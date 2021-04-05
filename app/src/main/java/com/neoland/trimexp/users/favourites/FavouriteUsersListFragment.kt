@@ -1,6 +1,7 @@
 package com.neoland.trimexp.users.favourites
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.neoland.trimexp.databinding.FragmentFavouriteuserslistBinding
+import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.entities.User
+import com.neoland.trimexp.experiences.detail.ExperienceDetailActivity
+import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity
+import com.neoland.trimexp.users.profile.UserProfileActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -102,7 +107,22 @@ class FavouriteUsersListFragment : Fragment(), FavouriteUsersListAdapterInterfac
     }
 
 
-    override fun onItemClick(userFavorite: User) {
+    private fun startUserProfileActivity(userId: Int){
+
+        activity?.let{
+            val intent = Intent(it, UserProfileActivity::class.java)
+            intent.putExtra(UserProfileActivity.TAG21, userId)
+            it.startActivity(intent)
+        }
+
+    }
+
+    override fun onItemClick(userId: Int){
+        startUserProfileActivity(userId)
+    }
+
+
+    override fun onLongItemClick(userFavorite: User) {
         val builder = AlertDialog.Builder(binding.root.context)
 
         builder.setMessage("User will be removed from your favorites. Are you sure?")

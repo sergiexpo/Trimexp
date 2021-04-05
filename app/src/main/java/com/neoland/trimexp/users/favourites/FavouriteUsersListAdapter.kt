@@ -15,7 +15,8 @@ import java.text.DecimalFormat
 
 
 interface FavouriteUsersListAdapterInterface{
-    fun onItemClick(user: User)
+    fun onItemClick(userId: Int)
+    fun onLongItemClick(user: User)
 }
 
 class FavouriteUsersListAdapter(private val listener : FavouriteUsersListAdapterInterface, private val userId: Int) : RecyclerView.Adapter<FavouriteUsersListAdapter.ExperienceViewHolder>()  {
@@ -44,8 +45,14 @@ class FavouriteUsersListAdapter(private val listener : FavouriteUsersListAdapter
         holder.itemBinding.ratingBarUser.rating = user.ratingValoration
 
         holder.itemBinding.root.setOnClickListener {
-            listener.onItemClick(users[position])
+            listener.onItemClick(user.userId)
         }
+
+        holder.itemBinding.root.setOnLongClickListener {
+            listener.onLongItemClick(user)
+            true
+        }
+
     }
 
     override fun getItemCount(): Int {

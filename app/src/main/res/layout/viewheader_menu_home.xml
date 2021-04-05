@@ -12,11 +12,11 @@
         android:id="@+id/imageView_homeMenu_PhotoUser"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/sample_castells"/>
+        app:srcCompat="@mipmap/sample_castells" />
 
     <TextView
         android:id="@+id/textView_homeMenu_UserName"
@@ -26,7 +26,6 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="18dp"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf = "@+id/imageView_homeMenu_PhotoUser" />

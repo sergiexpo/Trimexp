@@ -1,5 +1,6 @@
 package com.neoland.trimexp.experiences.detail
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.location.Geocoder
 import android.os.Bundle
@@ -18,10 +19,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.neoland.trimexp.R
 import com.neoland.trimexp.databinding.ActivityDetailExperienceBinding
 import com.neoland.trimexp.entities.Experience
+import com.neoland.trimexp.entities.User
 import com.neoland.trimexp.entities.UsersFavourites
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG20
 import com.neoland.trimexp.experiences.explorer.ExplorerExperiencesActivity.Companion.TAG10
 import com.neoland.trimexp.users.favourites.FavouriteUsersListFragmentViewModel
+import com.neoland.trimexp.users.profile.UserProfileActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
@@ -145,6 +148,15 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
         }
 
 
+        binding.imageViewPhotoUser.setOnClickListener {
+
+            experience.fkUserIdOwner?.let {
+                startUserProfileActivity(it)
+            }
+
+        }
+
+
 
 
     }
@@ -210,6 +222,13 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             return paymentType
         }
 
+    }
+
+
+    private fun startUserProfileActivity(userId: Int){
+            val intent = Intent(this, UserProfileActivity::class.java)
+            intent.putExtra(UserProfileActivity.TAG21, userId)
+            startActivity(intent)
     }
 
 

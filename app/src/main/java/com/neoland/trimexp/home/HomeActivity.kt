@@ -39,6 +39,7 @@ import com.neoland.trimexp.experiences.register.RegisterExperienceActivity
 import com.neoland.trimexp.experiences.userlist.UserListExperienceActivity
 import com.neoland.trimexp.places.PlacesAdapter
 import com.neoland.trimexp.users.favourites.FavouriteUsersListActivity
+import com.neoland.trimexp.users.profile.UserProfileActivity
 import com.neoland.trimexp.users.register.RegisterUserActivity
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.launch
@@ -99,6 +100,10 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
                         binding.drawerLayout.openDrawer(Gravity.LEFT)
                     }
 
+                    binding.navigationViewHome.getHeaderView(0).findViewById<CircleImageView>(R.id.imageView_homeMenu_PhotoUser).setOnClickListener {
+                        startUserProfileActivity(user.userId)
+                    }
+
                 } else {
                     binding.textViewTitle.text = "Welcome Visitor"
                     binding.imageViewIconMenu.setOnClickListener {
@@ -111,7 +116,6 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
         binding.imageViewLogAct.setImageResource(model.getLoginActivityImage())
 
         // val tvWelcome = binding.navigationViewRight.getHeaderView(0).findViewById<ImageView>(R.id.imageView_photosample)
-
 
 
         binding.navigationViewHome.setNavigationItemSelectedListener { item ->
@@ -393,6 +397,12 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
         startActivity(intent)
     }
 
+    private fun startUserProfileActivity(userId: Int){
+        val intent = Intent(this, UserProfileActivity::class.java)
+        intent.putExtra(UserProfileActivity.TAG21, userId)
+        startActivity(intent)
+    }
+
 
     // MARK - Dialogs
 
@@ -458,6 +468,10 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
                     isUserLogged = true
                     binding.imageViewIconMenu.setOnClickListener {
                         binding.drawerLayout.openDrawer(Gravity.LEFT)
+                    }
+
+                    binding.navigationViewHome.getHeaderView(0).findViewById<CircleImageView>(R.id.imageView_homeMenu_PhotoUser).setOnClickListener {
+                        startUserProfileActivity(user.userId)
                     }
 
                 } else {
