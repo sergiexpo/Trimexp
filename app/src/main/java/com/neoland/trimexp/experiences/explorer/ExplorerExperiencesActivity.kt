@@ -1,6 +1,7 @@
 package com.neoland.trimexp.experiences.explorer
 
 import android.app.Dialog
+import android.database.CursorWindow
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.Window
@@ -39,6 +40,14 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         binding = ActivityExplorerExperienceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        try {
+            val field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
+            field.isAccessible = true
+            field[null] = 100 * 1024 * 1024 //the 100MB is the new size
+        } catch (e: Exception) {
+                e.printStackTrace()
+        }
+
         date = intent.getLongExtra(TAG30, 0L)
         lat = intent.getDoubleExtra(TAG31, 0.0)
         long = intent.getDoubleExtra(TAG32, 0.0)
@@ -66,7 +75,7 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         binding.bottomNavigationViewMenuExperiencesList.setOnNavigationItemSelectedListener{ itemSelected ->
             when (itemSelected.itemId){
 
-                R.id.option_sort-> {
+                R.id.option_sort -> {
                     if (!fragmentList.isVisible) {
                         changeFragment(fragmentList)
                     }
@@ -80,12 +89,12 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
                 }
                 R.id.option_map -> {
                     if (!fragmentMap.isVisible) {
-                            fragmentMap.arguments = Bundle().apply {
-                                putLong("LONG", date)
-                                putDouble("LATITUD", lat)
-                                putDouble("LONGITUD", long)
-                            }
-                            changeFragment(fragmentMap)
+                        fragmentMap.arguments = Bundle().apply {
+                            putLong("LONG", date)
+                            putDouble("LATITUD", lat)
+                            putDouble("LONGITUD", long)
+                        }
+                        changeFragment(fragmentMap)
 
 
                     }
@@ -98,7 +107,7 @@ class ExplorerExperiencesActivity: AppCompatActivity() {
         }
 
 
-    private fun changeFragment(fragment : Fragment) {
+    private fun changeFragment(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.frameLayoutExperiences.id, fragment)
       //  fragmentTransaction.addToBackStack(null)

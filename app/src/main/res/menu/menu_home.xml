@@ -13,11 +13,11 @@
                     android:title="Create Experience" />
                 <item
                     android:id="@+id/menuHome_listExperiencesUser"
-                    android:icon="@mipmap/icon_list_experiences"
+                    android:icon="@mipmap/icon_list2"
                     android:title="My experiences list" />
                 <item
                     android:id="@+id/menuHome_manageExperiencesUser"
-                    android:icon="@mipmap/icon_modify_experience"
+                    android:icon="@mipmap/icon_update_exp"
                     android:title="Update experiences" />
             </menu>
         </group>

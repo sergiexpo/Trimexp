@@ -61,6 +61,13 @@ class ExplorerExperiencesFragmentViewModel(application: Application) : AndroidVi
     }
 
 
+    suspend fun getExperience(id: Int): Experience {
+        return  withContext(Dispatchers.IO){
+            Db.getDatabase(getApplication()).experienceDao().getExperience(id)
+        }
+    }
+
+
     //////// SORT FUNCTIONS ////////
 
 

@@ -65,6 +65,8 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
         createRecyclerView()
 
         observeModelExperiences()
+
+
     }
 
     override fun onResume() {

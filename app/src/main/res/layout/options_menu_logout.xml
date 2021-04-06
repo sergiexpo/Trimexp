@@ -3,19 +3,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_menuLogin"
-    android:layout_width="320dp"
+    android:layout_width="240dp"
     android:layout_height="wrap_content"
     android:background="#F1E9E9"
     android:orientation="vertical"
     android:padding="16dp">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_iconCancel"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/black" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="156dp"
+        android:layout_height="120dp"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
-        app:srcCompat="@mipmap/logo_trimexp_1" />
+        app:srcCompat="@mipmap/logo_trimexp_1"
+        android:layout_marginTop="-26dp"/>
 
 
     <TextView
@@ -34,14 +50,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="16dp">
 
-        <Button
-            android:id="@+id/button_logout_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/orange_1"
-            android:text="Cancel" />
+
 
         <Button
             android:id="@+id/button_logout"

@@ -489,10 +489,10 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
         dialog.setContentView(R.layout.options_menu_logout)
 
 
-        val buttonCancel = dialog.findViewById(R.id.button_logout_cancel) as Button
+        val imageIconCancel = dialog.findViewById(R.id.imageView_iconCancel) as ImageView
         val buttonLogOut = dialog.findViewById(R.id.button_logout) as Button
 
-        buttonCancel.setOnClickListener {
+        imageIconCancel.setOnClickListener {
             dialog.dismiss()
         }
 

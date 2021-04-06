@@ -69,7 +69,7 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             binding.textViewDescriptionDetailExp.text = experience.description
             binding.textViewDateDetailExp.text = formatDate(Date(experience.dateFrom))
             binding.textViewTimeDetailExp.text = experience.startHour
-            binding.textViewDurationDetailExp.text = experience.duration.toString() + " hours"
+            binding.textViewDurationDetailExp.text = formatDuration(experience.duration)
             binding.textViewPaymentDetailExp.text =formatPaymentMethods(experience.price, experience.paymentType)
             binding.textViewPriceDetailExp .text = formatIsFree(experience.price,experience.currency)
             
@@ -120,22 +120,30 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
                 model.loadPreferences("TAG_EMAIL")?.let{ email ->
                     if (email.isNotEmpty()) {
                         val user = model.getUser(email)
-
                         userFavoriteId?.let { userFavoriteId ->
-                            val usersFavorite = UsersFavourites(user.userId, userFavoriteId)
-                            modelFavorite.insertFavorite(usersFavorite)
-                            Toast.makeText(binding.root.context, "Users has been added", Toast.LENGTH_LONG).show()
-                            binding.imageViewAddUser.isClickable = false
+
+                          if ( modelFavorite.existUserFavorite(user.userId, userFavoriteId)){
+                              Toast.makeText(binding.root.context, "User already added to favorites", Toast.LENGTH_LONG).show()
+                          } else {
+                              val usersFavorite = UsersFavourites(user.userId, userFavoriteId)
+                              modelFavorite.insertFavorite(usersFavorite)
+                              Toast.makeText(binding.root.context, "Users has been added", Toast.LENGTH_LONG).show()
+                              binding.imageViewAddUser.isClickable = false
+                          }
                         }
                     } else {
                         model.loadPreferences("TAG_EMAIL_TEMPORAL")?.let { email_temp ->
                             if (email_temp.isNotEmpty()) {
                                 val user = model.getUser(email_temp)
                                 userFavoriteId?.let { userFavoriteId ->
-                                    val usersFavorite = UsersFavourites(user.userId, userFavoriteId)
-                                    modelFavorite.insertFavorite(usersFavorite)
-                                    Toast.makeText(binding.root.context, "Users has been adde", Toast.LENGTH_LONG).show()
-                                    binding.imageViewAddUser.isClickable = false
+                                    if ( modelFavorite.existUserFavorite(user.userId, userFavoriteId)){
+                                        Toast.makeText(binding.root.context, "User already added to favorites", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        val usersFavorite = UsersFavourites(user.userId, userFavoriteId)
+                                        modelFavorite.insertFavorite(usersFavorite)
+                                        Toast.makeText(binding.root.context, "Users has been added", Toast.LENGTH_LONG).show()
+                                        binding.imageViewAddUser.isClickable = false
+                                    }
                                 }
                             } else {
                                 Toast.makeText(binding.root.context, "Please, log in the app", Toast.LENGTH_LONG).show()
@@ -222,6 +230,19 @@ class ExperienceDetailActivity: AppCompatActivity(), OnMapReadyCallback {
             return paymentType
         }
 
+    }
+
+    // MARK - Format Functions Duration
+
+    fun formatDuration(duration: Float) : String{
+
+        var formatDistanceM = DecimalFormat("#")
+
+        if (duration.absoluteValue % 1.0 >= 0.005) {
+            return duration.toString() + " hours"
+        } else {
+            return formatDistanceM.format(duration).toString() + " hours"
+        }
     }
 
 

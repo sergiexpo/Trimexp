@@ -8,6 +8,8 @@
     android:layout_gravity="center">
 
 
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_experiences"
         android:layout_width="match_parent"
@@ -19,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="2"
         tools:listitem="@layout/card_experience" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

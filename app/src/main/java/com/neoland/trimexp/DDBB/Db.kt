@@ -45,11 +45,19 @@ abstract class Db : RoomDatabase() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     CoroutineScope(Dispatchers.IO).launch {
 
-                        val users: List<User> = listOf(User("Laia", "Barcelona", "Viajera callejera", "laia@gmail.com", "laia", R.mipmap.user_sample_1, 4.5F ),
-                                User("Goku", "Berlin", "Time traveller", "goku@gmail.com", "goku", R.mipmap.user_sample2, 4F ),
-                                User("Luffy", "Madrid", "Descubrir nuevos lugares", "luffy@gmail.com", "luffy", R.mipmap.user_sample3, 4F ),
-                                User("Iñigo Montoya", "Barcelona", "Hola, me llamo Íñigo Montoya, tú mataste a mi padre, prepárate a morir", "montoya@gmail.com", "montoya", R.mipmap.user_sample4,4.5F ),
-                                User("Sr Orco", "Barcelona", "Matar humanos", "orco@gmail.com", "orco", R.mipmap.user_sample5, 2.5F ))
+                        val users: List<User> = listOf(
+                                User("Laia", "Barcelona", "Viajera callejera. Me encata viajar, descubrir nuevos lugares y vivr nuevas experiencias",
+                                "laia@gmail.com", "laia", R.mipmap.user_sample_1, 4.5F ),
+                                User("Goku", "Berlin", "Fiel a su raza, Goku posee un espíritu combativo sumamente marcado, y es incapaz de resistirse a pelear con alguien que le parezca fuerte aun en los momentos más inoportunos. Es extremadamente competitivo y entrena constantemente, ya que nunca está satisfecho con su fuerza actual y siempre busca ir más allá.",
+                                        "goku@gmail.com", "goku", R.mipmap.user_sample2, 4F ),
+                                User("Luffy", "Madrid", "La personalidad de Luffy es como la de un niño, en el sentido de que tiende a ir a los extremos y él mismo se considera como una persona afortunada al tener su sonrisa. Les gusta descubrir nuevos lugares viajando con su barco",
+                                        "luffy@gmail.com", "luffy", R.mipmap.user_sample3, 4F ),
+                                User("Iñigo Montoya", "Barcelona", "Hola, me llamo Íñigo Montoya, tú mataste a mi padre, prepárate a morir",
+                                        "montoya@gmail.com", "montoya", R.mipmap.user_sample4,4.5F ),
+                                User("Sr Orco", "Barcelona", "Me gusta mucho matar humanos. También me gusta comerlos. Podemos quedar cuando quieras. No garantizo que salgas vivo",
+                                        "orco@gmail.com", "orco", R.mipmap.user_sample5, 2.5F ),
+                                User("Developer Loco", "Barcelona", "Desarrollo programas y juego a videjouegos. Puedes venir a mi casa a jugar al Starcraft o al WoW",
+                                        "developer@gmail.com", "developer", R.mipmap.user_sample6, 1F ))
 
                         INSTANCE?.userDAO()?.insertAll(users)
 
@@ -96,26 +104,36 @@ abstract class Db : RoomDatabase() {
                                         "Miguel Ángel Alarcón Moreno, que es así como se llama este joven mago, nació el 24 de abril de 1988 en la ciudad de Mollet del Vallès. A diferencia de muchos niños, él nunca tuvo el clásico juego de Magia Borrás, pero el interés y curiosidad por este noble arte siempre estuvo presente dentro de su cabeza. 2028 Pasa años de adolescencia entreteniendo a sus amigos y familiares con los típicos juegos de cartas que todo el mundo hemos hecho alguna vez.",
                                         "Barcelona", "Teatre apolo",41.374550, 2.169500, 2F, true,  "Guest", 10.5F,
                                         "€", "Bizum, Cash", null,1632477600000, null,"12:00h", false,5, 5F),
-                                Experience( "Tour Barcelona romana", R.mipmap.sample_tour_romana,
+                                Experience( "Tour Barcelona romana", R.mipmap.sample_tour_bcn_romana,
                                         "Las murallas romanas que rodean el corazón de Barcelona abarcan la Barcino que existió entre el siglo I aC y los inicios de la Edad Media. Una ciudad que nació como una pequeña colonia y que creció poco a poco hasta convertirse en, durante un período breve de tiempo, ciudad imperial. Recorre sus calles y descubre donde se ubicaba el fórum, los acueductos, las calles principales, etc.",
                                         "Barcelona", "Plaça Sant Jaume ", 41.382830, 2.177017, 2.5F, false, "Host", 10F,
                                         "€","Bizum, Cash",  null,1632477600000, null, "12:00h", false,3, 5F),
-                                Experience( "Tour de tapas en la Boqueria", R.mipmap.sample_tour_tapas,
+                                Experience( "Tour de tapas en la Boqueria", R.mipmap.sample_tour_tapas_boqueria,
                                         "La Boquería es un mercado abierto y un referente de Barcelona. Está en el corazón de la ciudad. Además de vender todo tipo de productos frescos y de km0 la Boqueria cuenta con varios bares para degustar las mejores tapas de la ciudad. Disfruta de esta pequeña guía que te llevará a los mejores bares del mercado y te ayudará a comprar productos frescos y de calidad.",
                                         "Barcelona", "La Boqueria", 41.38161, 2.171596, 3F, false, "Host", 0F,
                                         "€",null, null, 1629021600000,null, "12:00h", false,2, 5F),
-                                Experience( "Calçotada en Montjuïc", R.mipmap.sample_calcotada,
+                                Experience( "Calçotada en Montjuïc", R.mipmap.sample_montjuic,
                                         "El Mirador del Migdia es un merendero situado en una de los lugares más emblemáticos y que ofrece mejores vistas de Barcelona: Montjuïc. Aprende a cocinar y comer calçots. Disfruta de la gastronomíaa catalana y de los paisajes que ofrece la montaña de la ciudad de Barcelona.",
                                         "Barcelona", "Mirador del Migdia", 41.358847, 2.159522, 4.5F, false, "Host", 0F,
                                         "€", "Bizum, Cash", null,1639389600000, null, "12:00h", false,1, 3.5F),
                                 Experience( "Volley en la playa", R.mipmap.sample_volley,
                                         "¿Te gustan los deportes? ¿Te gusta el volley? ¿Te gustaría disfrutar de las playas de Barcelona? Ven con nosotros a jugar unos partidos de volley en la playa de Nova Icaria y aprovecha que estás cerca del agua para darte un buen baño en el mar, mientras descansamos.",
                                         "Barcelona", "Playa de Nova Icaria", 41.390163, 2.201465, 1.5F, false, "Host", 0F,
-                                        "€",null,null,  1617271200000,null, "12:00h", false,4, 3.5F),
-                                Experience( "Ruta modernista por Passeig de Gràcia", R.mipmap.sample_ruta_modernista,
+                                        "€",null,null,  1617271200000,null, "12:00h", false,6, 3.5F),
+                                Experience( "Ruta modernista por Passeig de Gràcia", R.mipmap.sample_tour_modernista,
                                         "Una de las calles más famosas y comerciales de Barcelona esconde un fuerte pasado modernista que va más allá de la Pedrera y la Casa Batlló. En este tour que empieza a Jardinets de Gracia, descubriremos varias casas que pertenecieron a familias importantes de Barcelona, así como diferentes curiosidades relacionadas con el Modernismo",
                                         "Barcelona", "Jardins de Salvador Espriu", 41.397511, 2.158182, 5F, false, "Host", 0F,
-                                        "€",null,  null,1639389600000, null, "12:00h", false,5, 3F)
+                                        "€",null,  null,1639389600000, null, "12:00h", false,6, 3F),
+                                Experience( "Partida Starcraft", R.mipmap.sample_starcraft,
+                                        "StarCraft es un juego de estrategia en tiempo real. Sus acontecimientos tienen lugar en un sector lejano de la galaxia Vía Láctea. Es el primer videojuego StarCraft y fue puesto a la venta para PC el 1 de abril de 1998. Una versión Mac OS del juego fue lanzada por Blizzard Entertainment en marzo de 1999.",
+                                        "Barcelona", "Arc de triomf", 41.391120, 2.179895, 12F, false, "Host", 0F,
+                                        "",null, null,1629021600000, null, "22:00h", false,6, 3F),
+                                Experience( "Partida Warcraft", R.mipmap.sample_wow,
+                                        "Descubre Azeroth tal y como era para una experiencia realmente auténtica. Una recreación de World of Warcraft original para disfrutar de una experiencia auténtica. Blizzard Entertainment. Marcas: Shadowlands, Battle for Azeroth, Warlords of Draenor.",
+                                        "Barcelona", "Parc Ciutadella", 41.388304, 2.184130, 12F, false, "Host", 0F,
+                                        "",null, null,1629021600000, null, "22:00h", false,6, 3F)
+
+
                         )
 
 
@@ -123,8 +141,7 @@ abstract class Db : RoomDatabase() {
 
                         val usersFavourites: List<UsersFavourites> = listOf(UsersFavourites(1,2),
                                 UsersFavourites(1,3),
-                                UsersFavourites(1,4),
-                                UsersFavourites(1,5)
+                                UsersFavourites(1,4)
                         )
 
                         INSTANCE?.UsersFavouritesDAO()?.insertAll(usersFavourites)

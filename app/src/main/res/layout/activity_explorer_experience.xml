@@ -72,7 +72,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#EFE9E9"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView_menuExperiencesType"
+        app:layout_constraintBottom_toTopOf="@+id/View_menuExperiencesType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottomNavigationView_menuExperiencesList" />
@@ -86,7 +86,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_type_experiences" />
+        app:menu="@menu/menu_type_experiences"
+        android:visibility="gone"/>
+
+    <View
+        android:id="@+id/View_menuExperiencesType"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@color/blue_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

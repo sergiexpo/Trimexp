@@ -11,6 +11,7 @@ import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.entities.User
 import com.neoland.trimexp.entities.UsersFavourites
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -37,12 +38,24 @@ class FavouriteUsersListFragmentViewModel (application: Application) : AndroidVi
 
     }
 
+    suspend fun existUserFavorite(userId: Int, userFavoriteId: Int) : Boolean{
+
+        var exists = false
+
+        viewModelScope.async(Dispatchers.IO) {
+            var favorite = Db.getDatabase(getApplication()).UsersFavouritesDAO().getUserFavourite(userId, userFavoriteId)
+
+            if (favorite != null){
+                exists = true
+            }
+        }.await()
+        return exists
+    }
+
 
     fun insertFavorite(usersFavorite: UsersFavourites){
         viewModelScope.launch(Dispatchers.IO) {
-
             Db.getDatabase(getApplication()).UsersFavouritesDAO().insert(usersFavorite)
-
         }
     }
 

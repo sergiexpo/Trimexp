@@ -188,7 +188,8 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingTop="2dp"
-                    android:paddingBottom="2dp">
+                    android:paddingBottom="2dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imageView_language"
