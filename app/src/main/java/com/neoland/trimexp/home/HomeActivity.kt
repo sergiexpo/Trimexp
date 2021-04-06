@@ -204,15 +204,7 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
             }
         }
 
-        binding.textViewButtontext.setOnClickListener {
-            if (model.status.value.isNullOrEmpty()){
-                model.status.observe(this){
-                    startExplorerExperienceActivity()
-                }
-            } else {
-                startExplorerExperienceActivity()
-            }
-        }
+
 
 
 
