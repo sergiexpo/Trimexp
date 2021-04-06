@@ -1,8 +1,7 @@
-package com.neoland.trimexp.DDBB
+package com.neoland.trimexp.ddbb
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.entities.User
 
 @Dao

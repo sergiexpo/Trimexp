@@ -2,20 +2,20 @@ package com.neoland.trimexp.home
 
 import android.app.Application
 import android.content.Context
-import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
-import com.neoland.trimexp.DDBB.App
-import com.neoland.trimexp.DDBB.Db
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import com.neoland.trimexp.ddbb.App
+import com.neoland.trimexp.ddbb.Db
 import com.neoland.trimexp.R
+import com.neoland.trimexp.ddbb.DbStatus
 import com.neoland.trimexp.entities.User
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 
 class HomeActivityViewModel (application: Application) : AndroidViewModel(application)  {
 
+    val status : LiveData<List<DbStatus>> = liveData { emitSource(Db.getDatabase(application).dbStatusDao().getAllLive()) }
 
     fun loadPreferences(tag: String) : String? {
         val sharedPreferences = getApplication<App>().getSharedPreferences("Preferencias", Context.MODE_PRIVATE)

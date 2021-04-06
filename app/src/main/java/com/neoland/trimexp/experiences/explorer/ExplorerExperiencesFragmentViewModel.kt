@@ -2,10 +2,9 @@ package com.neoland.trimexp.experiences.explorer
 
 import android.app.Application
 import android.location.Location
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.neoland.trimexp.DDBB.Db
+import androidx.lifecycle.*
+import com.neoland.trimexp.ddbb.Db
+import com.neoland.trimexp.ddbb.DbStatus
 import com.neoland.trimexp.entities.Experience
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,6 +13,8 @@ import kotlinx.coroutines.withContext
 class ExplorerExperiencesFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
     val experiences : MutableLiveData<List<Experience>> = MutableLiveData()
+
+
 
     fun getAllExperiences(){
 

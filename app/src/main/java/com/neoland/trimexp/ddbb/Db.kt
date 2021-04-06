@@ -1,4 +1,4 @@
-package com.neoland.trimexp.DDBB
+package com.neoland.trimexp.ddbb
 
 import android.content.Context
 import androidx.room.Database
@@ -12,7 +12,6 @@ import com.neoland.trimexp.entities.UsersFavourites
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 @Database(entities = [Experience::class, DbStatus::class, User::class, UsersFavourites::class], version = 1)
 abstract class Db : RoomDatabase() {

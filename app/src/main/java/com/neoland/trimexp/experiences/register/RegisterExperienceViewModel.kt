@@ -4,8 +4,8 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
-import com.neoland.trimexp.DDBB.App
-import com.neoland.trimexp.DDBB.Db
+import com.neoland.trimexp.ddbb.App
+import com.neoland.trimexp.ddbb.Db
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.entities.User
 import kotlinx.coroutines.Dispatchers

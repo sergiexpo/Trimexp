@@ -1,4 +1,4 @@
-package com.neoland.trimexp.DDBB
+package com.neoland.trimexp.ddbb
 
 import android.app.Application
 

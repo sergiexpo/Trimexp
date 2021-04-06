@@ -195,11 +195,23 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
 
 
         binding.imageViewButtonExplore.setOnClickListener {
+            if (model.status.value.isNullOrEmpty()){
+                model.status.observe(this){
+                    startExplorerExperienceActivity()
+                }
+            } else {
             startExplorerExperienceActivity()
+            }
         }
 
         binding.textViewButtontext.setOnClickListener {
-            startExplorerExperienceActivity()
+            if (model.status.value.isNullOrEmpty()){
+                model.status.observe(this){
+                    startExplorerExperienceActivity()
+                }
+            } else {
+                startExplorerExperienceActivity()
+            }
         }
 
 
@@ -239,8 +251,13 @@ class HomeActivity: AppCompatActivity(), PlacesAdapter.OnItemClicked {
                         && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             fusedLocationClient.lastLocation.addOnSuccessListener {
 
-                currentUserLat = it.latitude
-                currentUserLong = it.longitude
+                if (it == null){
+                    currentUserLat = 0.0
+                    currentUserLong = 0.0
+                } else {
+                    currentUserLat = it.latitude
+                    currentUserLong = it.longitude
+                }
 
                 currentUserLat?.let{ latitude ->
                     currentUserLong?.let { longitude ->

@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_trimexp_1"
         android:supportsRtl="true"
-        android:name=".DDBB.App"
+        android:name=".ddbb.App"
         android:theme="@style/Theme.Trimexp">
         <activity android:name=".splash.SplashActivity">
             <intent-filter>

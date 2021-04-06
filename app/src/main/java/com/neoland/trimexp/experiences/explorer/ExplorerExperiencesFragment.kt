@@ -2,6 +2,7 @@ package com.neoland.trimexp.experiences.explorer
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,6 +62,7 @@ class ExplorerExperiencesFragment: Fragment(),  ExplorerExperiencesAdapterInterf
         date = arguments?.getLong("LONG") ?: 0
         lat = arguments?.getDouble("LATITUD") ?: 0.0
         long = arguments?.getDouble("LONGITUD") ?: 0.0
+
 
         createRecyclerView()
 

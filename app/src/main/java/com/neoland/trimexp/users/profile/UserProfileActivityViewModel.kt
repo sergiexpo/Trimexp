@@ -2,7 +2,7 @@ package com.neoland.trimexp.users.profile
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.neoland.trimexp.DDBB.Db
+import com.neoland.trimexp.ddbb.Db
 import com.neoland.trimexp.entities.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

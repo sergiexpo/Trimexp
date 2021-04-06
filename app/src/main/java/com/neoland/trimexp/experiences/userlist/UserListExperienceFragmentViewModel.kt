@@ -2,12 +2,11 @@ package com.neoland.trimexp.experiences.userlist
 
 import android.app.Application
 import android.content.Context
-import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.neoland.trimexp.DDBB.App
-import com.neoland.trimexp.DDBB.Db
+import com.neoland.trimexp.ddbb.App
+import com.neoland.trimexp.ddbb.Db
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.entities.User
 import kotlinx.coroutines.Dispatchers

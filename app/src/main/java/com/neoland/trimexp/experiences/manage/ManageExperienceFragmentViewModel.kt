@@ -5,8 +5,8 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.neoland.trimexp.DDBB.App
-import com.neoland.trimexp.DDBB.Db
+import com.neoland.trimexp.ddbb.App
+import com.neoland.trimexp.ddbb.Db
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.entities.User
 import kotlinx.coroutines.Dispatchers

@@ -2,15 +2,12 @@ package com.neoland.trimexp.experiences.detail
 
 import android.app.Application
 import android.content.Context
-import android.location.Location
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
-import com.neoland.trimexp.DDBB.App
-import com.neoland.trimexp.DDBB.Db
+import com.neoland.trimexp.ddbb.App
+import com.neoland.trimexp.ddbb.Db
 import com.neoland.trimexp.entities.Experience
 import com.neoland.trimexp.entities.User
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ExperienceDetailViewModel (application: Application) : AndroidViewModel(application) {
